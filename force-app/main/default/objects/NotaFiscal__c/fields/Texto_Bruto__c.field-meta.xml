@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Texto_Bruto__c</fullName>
+    <description>Texto da nota fiscal colado ou digitado pelo cliente, antes de ser interpretado pela IA.</description>
+    <label>Texto Bruto da Nota</label>
+    <length>32000</length>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>10</visibleLines>
+</CustomField>

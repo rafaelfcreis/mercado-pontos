@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recomendacao_IA__c</fullName>
+    <description>Recomendacao de produto para resgate, gerada por IA (Prompt Builder) com base nos itens desta compra.</description>
+    <label>Recomendacao da IA</label>
+    <length>2000</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>5</visibleLines>
+</CustomField>
