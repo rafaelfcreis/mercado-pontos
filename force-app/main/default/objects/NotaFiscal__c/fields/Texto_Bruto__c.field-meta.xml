@@ -4,7 +4,6 @@
     <description>Texto da nota fiscal colado ou digitado pelo cliente, antes de ser interpretado pela IA.</description>
     <label>Texto Bruto da Nota</label>
     <length>32000</length>
-    <required>true</required>
     <trackTrending>false</trackTrending>
     <type>LongTextArea</type>
     <visibleLines>10</visibleLines>
