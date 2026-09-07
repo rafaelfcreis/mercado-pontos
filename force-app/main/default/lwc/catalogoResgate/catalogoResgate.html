@@ -1,0 +1,21 @@
+<template>
+    <lightning-card title="Catalogo de Resgate" icon-name="utility:store">
+        <div class="slds-p-around_medium">
+            <template if:true={mensagem}>
+                <p class={mensagemClass}>{mensagem}</p>
+            </template>
+            <template for:each={produtos} for:item="produto">
+                <div key={produto.Id} class="slds-box slds-m-bottom_small">
+                    <p class="slds-text-heading_small">{produto.Name}</p>
+                    <p>{produto.Descricao__c}</p>
+                    <p>{produto.Custo_Pontos__c} pontos</p>
+                    <lightning-button
+                        label="Resgatar"
+                        data-id={produto.Id}
+                        onclick={handleResgatar}
+                    ></lightning-button>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

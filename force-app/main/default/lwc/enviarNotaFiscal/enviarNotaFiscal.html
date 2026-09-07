@@ -1,0 +1,27 @@
+<template>
+    <lightning-card title="Enviar Nota Fiscal" icon-name="utility:file">
+        <div class="slds-p-around_medium">
+            <lightning-textarea
+                label="Cole aqui o texto da sua nota fiscal"
+                value={textoBruto}
+                onchange={handleTextoChange}
+            ></lightning-textarea>
+            <lightning-input
+                class="slds-m-top_small"
+                label="Chave de acesso (opcional, 44 digitos)"
+                value={chaveAcesso}
+                onchange={handleChaveChange}
+            ></lightning-input>
+            <template if:true={mensagem}>
+                <p class={mensagemClass}>{mensagem}</p>
+            </template>
+            <lightning-button
+                class="slds-m-top_small"
+                variant="brand"
+                label="Enviar Nota"
+                onclick={handleEnviar}
+                disabled={enviando}
+            ></lightning-button>
+        </div>
+    </lightning-card>
+</template>
