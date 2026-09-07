@@ -6,7 +6,6 @@
     <externalId>true</externalId>
     <label>Chave de Acesso da NFC-e</label>
     <length>44</length>
-    <required>true</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>true</unique>
