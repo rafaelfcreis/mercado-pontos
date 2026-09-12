@@ -4,7 +4,9 @@ public without sharing class MercadoPontosController {
     public static Id enviarNota(String textoBruto, String chaveAcesso) {
         try {
             Id contatoId = contatoDoUsuarioAtual();
-            return NotaFiscalProcessingService.registrarNotaPendente(contatoId, textoBruto, chaveAcesso);
+            Id notaFiscalId = NotaFiscalProcessingService.registrarNotaPendente(contatoId, textoBruto, chaveAcesso);
+            System.enqueueJob(new ProcessarNotaFiscalQueueable(notaFiscalId));
+            return notaFiscalId;
         } catch (NotaFiscalProcessingService.NotaDuplicadaException e) {
             throw new AuraHandledException(e.getMessage());
         }

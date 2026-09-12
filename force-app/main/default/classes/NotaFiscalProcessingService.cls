@@ -14,6 +14,7 @@ public without sharing class NotaFiscalProcessingService {
         public String dataCompra;
         public Decimal valorTotal;
         public List<ItemExtraido> itens;
+        public String recomendacao;
     }
 
     public static Id registrarNotaPendente(Id contatoId, String textoBruto, String chaveAcesso) {
@@ -67,6 +68,7 @@ public without sharing class NotaFiscalProcessingService {
         nota.Estabelecimento__c = dados.estabelecimento;
         nota.Valor_Total__c = dados.valorTotal;
         nota.Pontos_Gerados__c = pontosGerados;
+        nota.Recomendacao_IA__c = dados.recomendacao;
         if (String.isNotBlank(dados.dataCompra)) {
             try {
                 nota.Data_Compra__c = Date.valueOf(dados.dataCompra);

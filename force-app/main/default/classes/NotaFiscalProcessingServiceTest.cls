@@ -50,6 +50,7 @@ private class NotaFiscalProcessingServiceTest {
         dados.estabelecimento = 'Mercado Bom Preco';
         dados.dataCompra = '2026-09-06';
         dados.valorTotal = 34.90;
+        dados.recomendacao = 'Baseado nesta compra, o cliente pode gostar de trocar pontos por um oleo de soja.';
 
         NotaFiscalProcessingService.ItemExtraido item1 = new NotaFiscalProcessingService.ItemExtraido();
         item1.descricao = 'Arroz 5kg';
@@ -69,10 +70,11 @@ private class NotaFiscalProcessingServiceTest {
         NotaFiscalProcessingService.processarComDadosExtraidos(notaId, dados);
         Test.stopTest();
 
-        NotaFiscal__c nota = [SELECT Status__c, Pontos_Gerados__c, Data_Compra__c FROM NotaFiscal__c WHERE Id = :notaId];
+        NotaFiscal__c nota = [SELECT Status__c, Pontos_Gerados__c, Data_Compra__c, Recomendacao_IA__c FROM NotaFiscal__c WHERE Id = :notaId];
         System.assertEquals('Processada', nota.Status__c);
         System.assertEquals(34, nota.Pontos_Gerados__c);
         System.assertEquals(Date.newInstance(2026, 9, 6), nota.Data_Compra__c);
+        System.assertEquals(dados.recomendacao, nota.Recomendacao_IA__c);
 
         List<ItemNotaFiscal__c> itens = [SELECT Categoria__c FROM ItemNotaFiscal__c WHERE NotaFiscal__c = :notaId ORDER BY Descricao__c];
         System.assertEquals(2, itens.size());
