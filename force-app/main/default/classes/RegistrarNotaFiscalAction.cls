@@ -22,7 +22,7 @@ public without sharing class RegistrarNotaFiscalAction {
 
     public class Saida {
         @InvocableVariable(label='Pontos Gerados')
-        public Integer pontosGerados;
+        public Decimal pontosGerados;
 
         @InvocableVariable(label='Saldo Atual de Pontos')
         public Decimal saldoAtual;
