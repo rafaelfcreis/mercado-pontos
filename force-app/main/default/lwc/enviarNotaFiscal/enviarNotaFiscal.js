@@ -21,6 +21,15 @@ export default class EnviarNotaFiscal extends LightningElement {
         this.valorTotal = event.target.value;
     }
 
+    get valorTotalNumerico() {
+        if (!this.valorTotal) {
+            return null;
+        }
+        const normalizado = String(this.valorTotal).trim().replace(',', '.');
+        const numero = parseFloat(normalizado);
+        return isNaN(numero) ? null : numero;
+    }
+
     get mensagemClass() {
         return this.erro ? 'slds-text-color_error' : 'slds-text-color_success';
     }
@@ -31,8 +40,9 @@ export default class EnviarNotaFiscal extends LightningElement {
             this.erro = true;
             return;
         }
-        if (!this.valorTotal || this.valorTotal <= 0) {
-            this.mensagem = 'Informe o valor total da compra.';
+        const valor = this.valorTotalNumerico;
+        if (!valor || valor <= 0) {
+            this.mensagem = 'Informe o valor total da compra (ex: 137,40).';
             this.erro = true;
             return;
         }
@@ -43,7 +53,7 @@ export default class EnviarNotaFiscal extends LightningElement {
             await enviarNota({
                 textoBruto: this.textoBruto,
                 chaveAcesso: this.chaveAcesso,
-                valorTotal: this.valorTotal
+                valorTotal: valor
             });
             this.mensagem = 'Nota registrada! Seus pontos ja foram creditados no saldo.';
             this.textoBruto = '';
