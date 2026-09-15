@@ -112,6 +112,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ProdutoResgate__c.Imagem_URL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ProdutoResgate__c.Categoria__c</field>
         <readable>true</readable>
     </fieldPermissions>

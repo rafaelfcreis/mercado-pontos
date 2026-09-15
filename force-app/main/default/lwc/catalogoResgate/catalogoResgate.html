@@ -6,6 +6,9 @@
             </template>
             <template for:each={produtos} for:item="produto">
                 <div key={produto.Id} class="slds-box slds-m-bottom_small">
+                    <template if:true={produto.Imagem_URL__c}>
+                        <img src={produto.Imagem_URL__c} alt={produto.Name} class="slds-m-bottom_x-small" style="max-width:200px;display:block" />
+                    </template>
                     <p class="slds-text-heading_small">{produto.Name}</p>
                     <p>{produto.Descricao__c}</p>
                     <p>{produto.Custo_Pontos__c} pontos</p>

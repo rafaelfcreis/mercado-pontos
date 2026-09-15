@@ -30,7 +30,7 @@ public without sharing class MercadoPontosController {
     @AuraEnabled(cacheable=true)
     public static List<ProdutoResgate__c> catalogoDisponivel() {
         return [
-            SELECT Id, Name, Descricao__c, Custo_Pontos__c, Categoria__c, Estoque__c
+            SELECT Id, Name, Descricao__c, Custo_Pontos__c, Categoria__c, Estoque__c, Imagem_URL__c
             FROM ProdutoResgate__c
             WHERE Ativo__c = true
             ORDER BY Custo_Pontos__c ASC

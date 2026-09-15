@@ -9,9 +9,10 @@
             <lightning-input
                 class="slds-m-top_small"
                 type="number"
-                formatter="currency"
                 step="0.01"
-                label="Valor total da compra"
+                min="0.01"
+                label="Valor total da compra (R$)"
+                placeholder="Ex: 137.40"
                 value={valorTotal}
                 onchange={handleValorChange}
             ></lightning-input>
