@@ -8,6 +8,15 @@
             ></lightning-textarea>
             <lightning-input
                 class="slds-m-top_small"
+                type="number"
+                formatter="currency"
+                step="0.01"
+                label="Valor total da compra"
+                value={valorTotal}
+                onchange={handleValorChange}
+            ></lightning-input>
+            <lightning-input
+                class="slds-m-top_small"
                 label="Chave de acesso (opcional, 44 digitos)"
                 value={chaveAcesso}
                 onchange={handleChaveChange}

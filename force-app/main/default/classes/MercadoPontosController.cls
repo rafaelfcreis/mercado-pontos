@@ -1,11 +1,16 @@
 public without sharing class MercadoPontosController {
 
     @AuraEnabled
-    public static Id enviarNota(String textoBruto, String chaveAcesso) {
+    public static Id enviarNota(String textoBruto, String chaveAcesso, Decimal valorTotal) {
         try {
             Id contatoId = contatoDoUsuarioAtual();
             Id notaFiscalId = NotaFiscalProcessingService.registrarNotaPendente(contatoId, textoBruto, chaveAcesso);
-            System.enqueueJob(new ProcessarNotaFiscalQueueable(notaFiscalId));
+
+            NotaFiscalProcessingService.DadosExtraidos dados = new NotaFiscalProcessingService.DadosExtraidos();
+            dados.valorTotal = valorTotal;
+            dados.itens = new List<NotaFiscalProcessingService.ItemExtraido>();
+            NotaFiscalProcessingService.processarComDadosExtraidos(notaFiscalId, dados);
+
             return notaFiscalId;
         } catch (NotaFiscalProcessingService.NotaDuplicadaException e) {
             throw new AuraHandledException(e.getMessage());

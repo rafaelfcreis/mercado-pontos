@@ -48,16 +48,22 @@ private class MercadoPontosControllerTest {
 
         Test.startTest();
         System.runAs(usuarioPortal) {
-            Id notaId = MercadoPontosController.enviarNota('MERCADO TESTE\nARROZ 25,90', '11111111111111111111111111111111111111111111');
+            Id notaId = MercadoPontosController.enviarNota(
+                'MERCADO TESTE\nARROZ 25,90', '11111111111111111111111111111111111111111111', 25.90
+            );
             System.assertNotEquals(null, notaId);
 
             Decimal saldo = MercadoPontosController.saldoDePontos();
-            System.assertEquals(50, saldo);
+            System.assertEquals(75, saldo);
 
             List<ProdutoResgate__c> catalogo = MercadoPontosController.catalogoDisponivel();
             System.assertEquals(1, catalogo.size());
         }
         Test.stopTest();
+
+        NotaFiscal__c nota = [SELECT Status__c, Pontos_Gerados__c FROM NotaFiscal__c LIMIT 1];
+        System.assertEquals('Processada', nota.Status__c);
+        System.assertEquals(25, nota.Pontos_Gerados__c);
     }
 
     @IsTest
@@ -66,14 +72,14 @@ private class MercadoPontosControllerTest {
         String chave = '22222222222222222222222222222222222222222222';
 
         System.runAs(usuarioPortal) {
-            MercadoPontosController.enviarNota('texto original', chave);
+            MercadoPontosController.enviarNota('texto original', chave, 10);
         }
 
         Test.startTest();
         Boolean lancouExcecao = false;
         System.runAs(usuarioPortal) {
             try {
-                MercadoPontosController.enviarNota('texto repetido', chave);
+                MercadoPontosController.enviarNota('texto repetido', chave, 10);
             } catch (AuraHandledException e) {
                 lancouExcecao = true;
             }
