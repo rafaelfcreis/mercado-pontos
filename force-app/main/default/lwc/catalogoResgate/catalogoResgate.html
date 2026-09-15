@@ -4,19 +4,86 @@
             <template if:true={mensagem}>
                 <p class={mensagemClass}>{mensagem}</p>
             </template>
-            <template for:each={produtos} for:item="produto">
-                <div key={produto.Id} class="slds-box slds-m-bottom_small">
-                    <template if:true={produto.Imagem_URL__c}>
-                        <img src={produto.Imagem_URL__c} alt={produto.Name} class="slds-m-bottom_x-small" style="max-width:200px;display:block" />
+
+            <!-- Grade de produtos -->
+            <template if:false={emCheckout}>
+                <p class="slds-m-bottom_small">
+                    Seu saldo atual: <strong>{saldoAtual} pontos</strong>
+                </p>
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <template for:each={produtos} for:item="produto">
+                        <div
+                            key={produto.Id}
+                            class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-large-size_1-of-3 slds-m-bottom_medium"
+                        >
+                            <div class="slds-box slds-box_x-small slds-text-align_center" style="height:100%">
+                                <template if:true={produto.Imagem_URL__c}>
+                                    <img
+                                        src={produto.Imagem_URL__c}
+                                        alt={produto.Name}
+                                        class="slds-m-bottom_x-small"
+                                        style="max-width:100%;border-radius:4px"
+                                    />
+                                </template>
+                                <p class="slds-text-heading_small">{produto.Name}</p>
+                                <p class="slds-text-body_small slds-m-vertical_x-small">{produto.Descricao__c}</p>
+                                <p class="slds-m-bottom_small"><strong>{produto.Custo_Pontos__c} pontos</strong></p>
+                                <lightning-button
+                                    variant="brand"
+                                    label="Resgatar"
+                                    data-id={produto.Id}
+                                    onclick={handleAbrirCheckout}
+                                ></lightning-button>
+                            </div>
+                        </div>
                     </template>
-                    <p class="slds-text-heading_small">{produto.Name}</p>
-                    <p>{produto.Descricao__c}</p>
-                    <p>{produto.Custo_Pontos__c} pontos</p>
-                    <lightning-button
-                        label="Resgatar"
-                        data-id={produto.Id}
-                        onclick={handleResgatar}
-                    ></lightning-button>
+                </div>
+            </template>
+
+            <!-- Tela de checkout -->
+            <template if:true={emCheckout}>
+                <div class="slds-box slds-box_small" style="max-width:400px;margin:0 auto">
+                    <h2 class="slds-text-heading_medium slds-m-bottom_small">Confirmar resgate</h2>
+                    <template if:true={produtoSelecionado.Imagem_URL__c}>
+                        <img
+                            src={produtoSelecionado.Imagem_URL__c}
+                            alt={produtoSelecionado.Name}
+                            style="max-width:100%;border-radius:4px"
+                            class="slds-m-bottom_small"
+                        />
+                    </template>
+                    <p class="slds-text-heading_small">{produtoSelecionado.Name}</p>
+                    <p class="slds-m-vertical_x-small">{produtoSelecionado.Descricao__c}</p>
+
+                    <div class="slds-m-vertical_medium">
+                        <p>Custo do resgate: <strong>{produtoSelecionado.Custo_Pontos__c} pontos</strong></p>
+                        <p>Seu saldo atual: <strong>{saldoAtual} pontos</strong></p>
+                        <p>Saldo apos o resgate: <strong>{saldoAposResgate} pontos</strong></p>
+                    </div>
+
+                    <template if:true={saldoInsuficiente}>
+                        <p class="slds-text-color_error slds-m-bottom_small">
+                            Saldo insuficiente para este resgate.
+                        </p>
+                    </template>
+
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col">
+                            <lightning-button
+                                label="Cancelar"
+                                onclick={handleCancelarCheckout}
+                                disabled={resgatando}
+                            ></lightning-button>
+                        </div>
+                        <div class="slds-col">
+                            <lightning-button
+                                variant="brand"
+                                label="Confirmar Resgate"
+                                onclick={handleConfirmarResgate}
+                                disabled={confirmarDesabilitado}
+                            ></lightning-button>
+                        </div>
+                    </div>
                 </div>
             </template>
         </div>
