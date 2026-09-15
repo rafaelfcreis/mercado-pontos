@@ -38,10 +38,27 @@ public without sharing class MercadoPontosController {
     }
 
     @AuraEnabled
-    public static Id resgatar(Id produtoId) {
+    public static Id resgatar(
+        Id produtoId,
+        String endereco,
+        String numero,
+        String complemento,
+        String bairro,
+        String cidade,
+        String estado,
+        String cep
+    ) {
         try {
             Id contatoId = contatoDoUsuarioAtual();
-            return ResgateService.resgatarProduto(contatoId, produtoId);
+            ResgateService.EnderecoEntrega enderecoEntrega = new ResgateService.EnderecoEntrega();
+            enderecoEntrega.endereco = endereco;
+            enderecoEntrega.numero = numero;
+            enderecoEntrega.complemento = complemento;
+            enderecoEntrega.bairro = bairro;
+            enderecoEntrega.cidade = cidade;
+            enderecoEntrega.estado = estado;
+            enderecoEntrega.cep = cep;
+            return ResgateService.resgatarProduto(contatoId, produtoId, enderecoEntrega);
         } catch (ResgateService.ResgateException e) {
             throw new AuraHandledException(e.getMessage());
         }

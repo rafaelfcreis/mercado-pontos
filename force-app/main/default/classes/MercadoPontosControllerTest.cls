@@ -96,7 +96,9 @@ private class MercadoPontosControllerTest {
 
         Test.startTest();
         System.runAs(usuarioPortal) {
-            Id resgateId = MercadoPontosController.resgatar(produto.Id);
+            Id resgateId = MercadoPontosController.resgatar(
+                produto.Id, 'Rua das Flores', '123', 'Apto 45', 'Centro', 'Sao Paulo', 'SP', '01000-000'
+            );
             System.assertNotEquals(null, resgateId);
         }
         Test.stopTest();

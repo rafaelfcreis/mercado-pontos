@@ -9,6 +9,36 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Resgate__c.Endereco__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Resgate__c.Complemento__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Resgate__c.Bairro__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Resgate__c.Cidade__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Resgate__c.Estado__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Resgate__c.CEP__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NotaFiscal__c.Chave_Acesso__c</field>
         <readable>true</readable>
     </fieldPermissions>

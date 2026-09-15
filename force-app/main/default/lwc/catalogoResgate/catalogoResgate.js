@@ -12,6 +12,14 @@ export default class CatalogoResgate extends LightningElement {
     resgatando = false;
     produtoSelecionadoId;
 
+    endereco = '';
+    numero = '';
+    complemento = '';
+    bairro = '';
+    cidade = '';
+    estado = '';
+    cep = '';
+
     @wire(catalogoDisponivel)
     wiredCatalogo(result) {
         this.wiredCatalogoResultado = result;
@@ -56,18 +64,57 @@ export default class CatalogoResgate extends LightningElement {
         return produto ? this.saldoAtual < produto.Custo_Pontos__c : false;
     }
 
+    get enderecoIncompleto() {
+        return !this.endereco || !this.cidade || !this.estado || !this.cep;
+    }
+
     get confirmarDesabilitado() {
-        return this.saldoInsuficiente || this.resgatando;
+        return this.saldoInsuficiente || this.resgatando || this.enderecoIncompleto;
     }
 
     handleAbrirCheckout(event) {
         this.produtoSelecionadoId = event.target.dataset.id;
         this.mensagem = '';
         this.erro = false;
+        this.endereco = '';
+        this.numero = '';
+        this.complemento = '';
+        this.bairro = '';
+        this.cidade = '';
+        this.estado = '';
+        this.cep = '';
     }
 
     handleCancelarCheckout() {
         this.produtoSelecionadoId = null;
+    }
+
+    handleEnderecoChange(event) {
+        this.endereco = event.target.value;
+    }
+
+    handleNumeroChange(event) {
+        this.numero = event.target.value;
+    }
+
+    handleComplementoChange(event) {
+        this.complemento = event.target.value;
+    }
+
+    handleBairroChange(event) {
+        this.bairro = event.target.value;
+    }
+
+    handleCidadeChange(event) {
+        this.cidade = event.target.value;
+    }
+
+    handleEstadoChange(event) {
+        this.estado = event.target.value;
+    }
+
+    handleCepChange(event) {
+        this.cep = event.target.value;
     }
 
     async handleConfirmarResgate() {
@@ -79,8 +126,17 @@ export default class CatalogoResgate extends LightningElement {
         this.mensagem = '';
         this.erro = false;
         try {
-            await resgatar({ produtoId: produto.Id });
-            this.mensagem = `Resgate de "${produto.Name}" confirmado com sucesso!`;
+            await resgatar({
+                produtoId: produto.Id,
+                endereco: this.endereco,
+                numero: this.numero,
+                complemento: this.complemento,
+                bairro: this.bairro,
+                cidade: this.cidade,
+                estado: this.estado,
+                cep: this.cep
+            });
+            this.mensagem = `Resgate de "${produto.Name}" confirmado com sucesso! Vai ser entregue no endereco informado.`;
             this.produtoSelecionadoId = null;
             await Promise.all([
                 refreshApex(this.wiredCatalogoResultado),

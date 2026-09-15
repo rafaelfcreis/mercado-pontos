@@ -2,7 +2,27 @@ public without sharing class ResgateService {
 
     public class ResgateException extends Exception {}
 
-    public static Id resgatarProduto(Id contatoId, Id produtoId) {
+    public class EnderecoEntrega {
+        public String endereco;
+        public String numero;
+        public String complemento;
+        public String bairro;
+        public String cidade;
+        public String estado;
+        public String cep;
+    }
+
+    public static Id resgatarProduto(Id contatoId, Id produtoId, EnderecoEntrega endereco) {
+        if (
+            endereco == null ||
+            String.isBlank(endereco.endereco) ||
+            String.isBlank(endereco.cidade) ||
+            String.isBlank(endereco.estado) ||
+            String.isBlank(endereco.cep)
+        ) {
+            throw new ResgateException('Preencha o endereco completo de entrega (endereco, cidade, estado e CEP).');
+        }
+
         Contact cliente = [SELECT Id, Saldo_Pontos__c FROM Contact WHERE Id = :contatoId LIMIT 1];
         ProdutoResgate__c produto = [
             SELECT Id, Custo_Pontos__c, Ativo__c, Estoque__c
@@ -24,7 +44,13 @@ public without sharing class ResgateService {
             Contato__c = contatoId,
             ProdutoResgate__c = produtoId,
             Pontos_Utilizados__c = produto.Custo_Pontos__c,
-            Status__c = 'Solicitado'
+            Status__c = 'Solicitado',
+            Endereco__c = endereco.endereco + (String.isBlank(endereco.numero) ? '' : ', ' + endereco.numero),
+            Complemento__c = endereco.complemento,
+            Bairro__c = endereco.bairro,
+            Cidade__c = endereco.cidade,
+            Estado__c = endereco.estado,
+            CEP__c = endereco.cep
         );
         insert resgate;
 
