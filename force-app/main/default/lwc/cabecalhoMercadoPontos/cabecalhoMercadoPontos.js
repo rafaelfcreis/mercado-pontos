@@ -3,6 +3,7 @@ import saldoDePontos from '@salesforce/apex/MercadoPontosController.saldoDePonto
 
 export default class CabecalhoMercadoPontos extends LightningElement {
     @api linkCatalogo = '/mercadopontos/catalogo';
+    @api linkHome = '/mercadopontos/';
     @api tituloSite = 'Mercado Pontos';
 
     saldo = 0;

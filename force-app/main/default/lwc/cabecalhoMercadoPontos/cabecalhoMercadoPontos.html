@@ -1,7 +1,7 @@
 <template>
     <header class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-p-around_small cabecalho">
         <div class="slds-col cabecalho-titulo">
-            {tituloSite}
+            <a href={linkHome} class="cabecalho-titulo-link">{tituloSite}</a>
         </div>
         <div class="slds-col slds-grid slds-grid_vertical-align-center">
             <template if:true={saldoDisponivel}>
@@ -9,8 +9,8 @@
                     <lightning-icon icon-name="utility:reward" size="x-small" class="slds-m-right_xx-small"></lightning-icon>
                     {saldo} pontos
                 </span>
+                <a href={linkCatalogo} class="cabecalho-link">Trocar Pontos</a>
             </template>
-            <a href={linkCatalogo} class="cabecalho-link">Trocar Pontos</a>
         </div>
     </header>
 </template>

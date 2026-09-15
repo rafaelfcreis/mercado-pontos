@@ -8,6 +8,15 @@
     font-weight: bold;
 }
 
+.cabecalho-titulo-link {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.cabecalho-titulo-link:hover {
+    text-decoration: underline;
+}
+
 .cabecalho-saldo {
     font-weight: bold;
 }

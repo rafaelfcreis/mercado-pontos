@@ -10,6 +10,7 @@
     <targetConfigs>
         <targetConfig targets="lightningCommunity__Default">
             <property name="tituloSite" type="String" default="Mercado Pontos" label="Titulo exibido no cabecalho" />
+            <property name="linkHome" type="String" default="/mercadopontos/" label="Link da Home (usado no titulo)" />
             <property name="linkCatalogo" type="String" default="/mercadopontos/catalogo" label="Link para a pagina de troca de pontos" />
         </targetConfig>
     </targetConfigs>
