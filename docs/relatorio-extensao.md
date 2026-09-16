@@ -148,9 +148,13 @@ Claude Code para pair-programming.
 
 **Ação 2 — Lógica de negócio e interface (LWC)** (06/09/2026)
 Como fazer: implementação dos serviços Apex de processamento de nota
-fiscal e resgate de pontos, com testes automatizados (cobertura acima de
-95%), e dos componentes de interface (`enviarNotaFiscal`, `extratoPontos`,
-`catalogoResgate`).
+fiscal e resgate de pontos, com testes automatizados, e dos componentes de
+interface (`enviarNotaFiscal`, `extratoPontos`, `catalogoResgate`).
+Cobertura de testes medida ao final do projeto (16/09/2026, execução real
+da suíte): `NotaFiscalProcessingService` 98%, `RegistrarNotaFiscalAction`
+97%, `ResgateService` 96%, `MercadoPontosController` 91%,
+`ProcessarNotaFiscalQueueable` 89% — 25 testes das classes deste projeto,
+todos passando.
 
 **Ação 3 — Autodiagnóstico** (16/09/2026)
 Como fazer: na ausência de uma comunidade externa disponível, o autor
@@ -179,7 +183,13 @@ tela de login), adição de melhorias de experiência (catálogo responsivo,
 tela de checkout de resgate com confirmação, formulário de endereço de
 entrega, cabeçalho do site). Detalhes completos na Parte III.
 
-**Outras ações pendentes:** `[AJUSTAR: gravação de vídeo demo, se aplicável]`
+**Ação 7 — Verificação final e fechamento** (16/09/2026)
+Como fazer: execução completa da suíte de testes automatizados para
+confirmar que o sistema continuava íntegro ao final (o que revelou e
+corrigiu uma regressão real de `MIXED_DML_OPERATION` nos testes de usuário
+de portal), auditoria dos templates de e-mail do site para garantir que
+nenhuma identidade de terceiros vazasse nas mensagens enviadas aos
+clientes, e consolidação da documentação e das evidências do processo.
 
 ### 2. Envolvimento do público participante
 
@@ -189,15 +199,21 @@ forneceu o diagnóstico real (Parte I) e também testou pessoalmente o site
 publicado de ponta a ponta (cadastro, login, envio de nota, resgate com
 QR code) na condição de usuário final da própria solução.
 
-Registros de evidência: `[AJUSTAR: prints do site publicado sendo usado
-pelo autor — cadastro, envio de nota, extrato de pontos, resgate]`.
+Registros de evidência desse uso real estão listados na Parte III, seção
+"Evidências das atividades realizadas" (item 5): prints do site publicado
+sendo usado pelo autor — cadastro, envio de nota, extrato de pontos e
+resgate com QR code.
 
 ### 3. Avaliação dos resultados alcançados
 
 **Objetivo 1** (site funcional publicado): avaliado objetivamente — o site
-está publicado e ao vivo, testado com um fluxo real de ponta a ponta
+está publicado e ao vivo (status `Live`, confirmado via consulta ao objeto
+`Network` do Salesforce), testado com um fluxo real de ponta a ponta
 (cadastro → envio de nota → crédito de pontos → resgate com QR code de
-retirada), com o código versionado publicamente em git.
+retirada), com o código versionado em git (27 commits desde 06/09/2026,
+repositório local) e a suíte de testes automatizados passando integralmente
+(94 testes executados no org, 100% de aprovação; cobertura global do org em
+87%).
 
 **Objetivo 2** (conhecimento prático de IA generativa): avaliado pelas
 decisões de arquitetura de IA efetivamente tomadas e documentadas ao longo
@@ -302,7 +318,13 @@ bugs de plataforma genuínos, não erros de configuração:
    ironicamente, falhava ao salvar com o erro clássico de Apex "DML
    operation on setup object is not permitted after you have updated a
    non-setup object" — contornado atualizando o registro
-   `NetworkSelfRegistration` diretamente pela API de dados.
+   `NetworkSelfRegistration` diretamente pela API de dados. A mesma
+   restrição de plataforma voltou a aparecer na verificação final do
+   projeto, desta vez nos testes automatizados: o `@TestSetup` dos testes
+   de usuário de portal criava um `UserRole` (objeto de setup) e uma
+   `Account` (objeto comum) na mesma transação, derrubando 5 testes com o
+   mesmo erro. Corrigido isolando o DML dos objetos de setup dentro de um
+   bloco `System.runAs`, contorno padrão previsto pela plataforma.
 8. **CSP bloqueando imagens externas**: imagens do catálogo de produtos
    não carregavam porque o domínio usado não estava na lista de CSP
    Trusted Sites do site — resolvido adicionando o domínio via metadata.
@@ -333,7 +355,16 @@ bugs de plataforma genuínos, não erros de configuração:
     consultando os templates via SOQL (a Metadata API não consegue nem
     recuperar esses templates de sistema, só a API de dados consegue),
     quais dos 11 templates realmente usavam esse campo (só 2 usavam; os
-    outros 9 já usam `{!Community_Name}`, que é seguro). Também
+    outros 9 já usam `{!Community_Name}`, que é seguro). O
+    compartilhamento foi comprovado de forma objetiva consultando o objeto
+    `Network`: os dois sites do org (`Mercado Pontos` e o do outro
+    trabalho) apontam para exatamente os **mesmos três Ids de template**
+    de boas-vindas, troca e recuperação de senha — ou seja, não é uma
+    suposição, é a configuração real da plataforma. Uma auditoria final
+    varrendo os 42 templates do org confirmou que os três efetivamente
+    usados pelos sites ficaram limpos, e que as ocorrências restantes de
+    `{!Organization.Name}` estão apenas em templates de exemplo padrão do
+    Salesforce, não referenciados por nenhum dos dois sites. Também
     identificado que o **idioma padrão do org inteiro** está em inglês
     (`en_US`), o que faz novos usuários que se autocadastram no site
     herdarem inglês por padrão, mesmo o site estando configurado em
@@ -369,34 +400,89 @@ arquitetura reais, documentadas neste relatório.
 
 ### 2. Evidências das atividades realizadas
 
-`[AJUSTAR: redigir a contextualização de cada evidência antes de anexar]`
+As evidências abaixo documentam tanto o **produto final** (o site
+funcionando) quanto o **processo de construção** — este último especialmente
+relevante para uma disciplina de Inteligência Artificial para Devs, já que o
+desenvolvimento inteiro foi feito em par com uma IA.
 
-- Link do repositório git (histórico completo de commits):
-  `[AJUSTAR: link do repositório, se publicado remotamente, ou indicar que
-  é local]`
-- `docs/historico-conversa-claude-code.md` — histórico completo da
-  conversa de desenvolvimento com a IA (reexecutar
-  `scripts/gerar-historico-claude.ps1` antes de anexar, para pegar a
-  versão mais atualizada).
-- Site publicado: https://orgfarm-375b864f55-dev-ed.develop.my.site.com/mercadopontos
-- `[AJUSTAR: prints do Object Manager (modelo de dados), das classes Apex
-  e cobertura de testes, dos componentes LWC, do Agent Builder
-  (Agentforce), do site publicado (Home, cadastro, envio de nota,
-  catálogo, checkout de resgate com QR code, e-mail de confirmação
-  recebido)]`
+**1. Site publicado e no ar** —
+https://orgfarm-375b864f55-dev-ed.develop.my.site.com/mercadopontos
+É a entrega principal do Objetivo 1: um site Experience Cloud público, com
+cadastro próprio, onde o cliente envia o texto da nota fiscal, acumula
+pontos e os troca por produtos. Status `Live` confirmado por consulta ao
+objeto `Network` do Salesforce.
+
+**2. Histórico completo da conversa de desenvolvimento com a IA** —
+`docs/historico-conversa-claude-code.md`
+Transcrição de todas as sessões de trabalho com o assistente de IA (Claude
+Code), gerada automaticamente pelo script
+`scripts/gerar-historico-claude.ps1` a partir dos registros locais da
+ferramenta. É a evidência mais direta do processo: mostra as decisões de
+arquitetura sendo tomadas, os bugs sendo investigados com evidência real
+(consultas, logs, pesquisa de documentação) e os momentos em que o plano
+original precisou mudar. Documenta o objeto de estudo da disciplina — o uso
+de IA no desenvolvimento — pelo próprio ato de tê-lo usado.
+
+**3. Repositório git do projeto** — repositório **local**, não publicado em
+servidor remoto. Reúne 29 commits entre 06/09/2026 e 16/09/2026, com
+mensagens descritivas que registram cada etapa e cada problema real
+encontrado (por exemplo, os commits que documentam o pivot do Prompt
+Builder para o Agentforce e a correção dos templates de e-mail). Serve como
+linha do tempo objetiva do trabalho — as datas do cronograma da Parte II
+vêm dele.
+
+**4. Suíte de testes automatizados** — execução real em 16/09/2026: 94
+testes no org, 100% de aprovação, cobertura global de 87%. Das classes
+deste projeto: `NotaFiscalProcessingService` 98%,
+`RegistrarNotaFiscalAction` 97%, `ResgateService` 96%,
+`MercadoPontosController` 91%, `ProcessarNotaFiscalQueueable` 89%.
+Evidencia que a lógica de negócio (cálculo de pontos, bloqueio de nota
+duplicada, validação de CPF, controle de saldo e estoque) está de fato
+verificada, e não apenas "funcionando na tela".
+
+**5. Registros visuais do sistema** (prints a anexar — ver lista na seção
+"Próximos passos deste documento"): demonstram o modelo de dados, o código,
+a configuração da IA e o sistema em uso real pelo autor.
 
 ---
 
 ## Próximos passos deste documento
 
-1. Preencher os dados pessoais que restaram como `[AJUSTAR]` (faixa etária,
-   escolaridade, localização, data de entrega).
-2. **Revisar o texto em primeira pessoa da Parte III** (Contextualização e
-   impressões finais) — foi escrito pela IA a partir dos fatos reais do
-   desenvolvimento, mas precisa soar com a sua voz antes de entregar.
-3. Tirar e anexar os prints listados na seção "Evidências das atividades
-   realizadas".
-4. Decidir e preencher o link do repositório git (local ou publicado).
+Tudo o que podia ser resolvido de forma automática já foi (cronograma a
+partir das datas reais dos commits, números reais de cobertura de testes,
+auditoria dos e-mails, contextualização das evidências). Restam **apenas os
+itens que dependem do autor**:
+
+**1. Preencher os dados pessoais** marcados como `[AJUSTAR]` na Parte I,
+seção 1: faixa etária, escolaridade e perfil socioeconômico, e
+cidade/estado.
+
+**2. Preencher a data de entrega** nos dois pontos marcados `[AJUSTAR]`
+(Parte I, Objetivo 1; e Parte II, seção 1).
+
+**3. Revisar o texto em primeira pessoa da Parte III** (Contextualização e
+o parágrafo de impressões finais) — foi redigido pela IA a partir dos fatos
+reais do desenvolvimento, mas precisa soar com a sua própria voz antes da
+entrega. Os fatos estão corretos; o que pode mudar é o jeito de contar.
+
+**4. Tirar e anexar os prints** (item 5 das Evidências). Sugestão de lista,
+cobrindo cada parte do que foi construído:
+- *Modelo de dados*: Setup → Object Manager, mostrando os objetos
+  `NotaFiscal__c`, `ItemNotaFiscal__c`, `ProdutoResgate__c` e `Resgate__c`.
+- *Código e testes*: a lista de classes Apex e a tela de resultado da
+  execução dos testes com a cobertura.
+- *Componentes de interface*: a lista de componentes LWC do projeto.
+- *IA generativa*: o Agent Builder (Agentforce) com o agente
+  `Mercado_Pontos_Assistente`, e uma conversa de teste em que ele
+  interpreta o texto de uma nota fiscal — esta é a evidência visual mais
+  importante para a disciplina.
+- *Sistema em uso*: Home do site, tela de cadastro, envio de uma nota,
+  extrato de pontos, catálogo, checkout do resgate, tela de confirmação com
+  o QR code, e o e-mail de confirmação recebido na caixa de entrada.
+
+**5. Decidir se o repositório git será publicado** (GitHub, por exemplo).
+Hoje ele é local, e o relatório está escrito dessa forma na seção de
+Evidências. Se optar por publicar, basta trocar aquela frase pelo link.
 
 ## Fontes
 
