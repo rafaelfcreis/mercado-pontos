@@ -45,10 +45,10 @@ public without sharing class MercadoPontosController {
     }
 
     @AuraEnabled
-    public static ResultadoResgate resgatar(Id produtoId) {
+    public static ResultadoResgate resgatar(Id produtoId, String documento) {
         try {
             Id contatoId = contatoDoUsuarioAtual();
-            Id resgateId = ResgateService.resgatarProduto(contatoId, produtoId);
+            Id resgateId = ResgateService.resgatarProduto(contatoId, produtoId, documento);
 
             Resgate__c resgate = [SELECT Codigo_Retirada__c FROM Resgate__c WHERE Id = :resgateId LIMIT 1];
 

@@ -12,6 +12,7 @@ export default class CatalogoResgate extends LightningElement {
     resgatando = false;
     produtoSelecionadoId;
     confirmacao;
+    documento = '';
 
     @wire(catalogoDisponivel)
     wiredCatalogo(result) {
@@ -66,7 +67,7 @@ export default class CatalogoResgate extends LightningElement {
     }
 
     get confirmarDesabilitado() {
-        return this.saldoInsuficiente || this.resgatando;
+        return this.saldoInsuficiente || this.resgatando || !this.documento;
     }
 
     get urlQrCode() {
@@ -81,6 +82,11 @@ export default class CatalogoResgate extends LightningElement {
         this.produtoSelecionadoId = event.target.dataset.id;
         this.mensagem = '';
         this.erro = false;
+        this.documento = '';
+    }
+
+    handleDocumentoChange(event) {
+        this.documento = event.target.value;
     }
 
     handleCancelarCheckout() {
@@ -100,7 +106,7 @@ export default class CatalogoResgate extends LightningElement {
         this.mensagem = '';
         this.erro = false;
         try {
-            const resultado = await resgatar({ produtoId: produto.Id });
+            const resultado = await resgatar({ produtoId: produto.Id, documento: this.documento });
             this.confirmacao = {
                 produtoNome: produto.Name,
                 codigoRetirada: resultado.codigoRetirada

@@ -44,6 +44,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Resgate__c.Documento__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NotaFiscal__c.Chave_Acesso__c</field>
         <readable>true</readable>
     </fieldPermissions>

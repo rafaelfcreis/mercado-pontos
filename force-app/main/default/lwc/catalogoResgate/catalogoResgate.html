@@ -67,10 +67,20 @@
                         </p>
                     </template>
 
-                    <p class="slds-text-body_small slds-m-bottom_medium">
+                    <p class="slds-text-body_small slds-m-bottom_small">
                         Ao confirmar, voce recebe um codigo (QR code) para retirar o produto no caixa de
-                        qualquer loja da rede, alem de uma copia por e-mail.
+                        qualquer loja da rede, alem de uma copia por e-mail. Leve tambem um documento com
+                        foto para conferencia.
                     </p>
+
+                    <lightning-input
+                        label="Documento (CPF ou RG)"
+                        placeholder="Ex: 123.456.789-00"
+                        value={documento}
+                        required
+                        class="slds-m-bottom_medium"
+                        onchange={handleDocumentoChange}
+                    ></lightning-input>
 
                     <div class="slds-grid slds-gutters">
                         <div class="slds-col">

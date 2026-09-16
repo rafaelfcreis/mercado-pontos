@@ -2,7 +2,11 @@ public without sharing class ResgateService {
 
     public class ResgateException extends Exception {}
 
-    public static Id resgatarProduto(Id contatoId, Id produtoId) {
+    public static Id resgatarProduto(Id contatoId, Id produtoId, String documento) {
+        if (!documentoValido(documento)) {
+            throw new ResgateException('Informe um documento valido (CPF ou RG) para retirada do produto na loja.');
+        }
+
         Contact cliente = [SELECT Id, Name, Email, Saldo_Pontos__c FROM Contact WHERE Id = :contatoId LIMIT 1];
         ProdutoResgate__c produto = [
             SELECT Id, Name, Descricao__c, Custo_Pontos__c, Ativo__c, Estoque__c
@@ -25,7 +29,8 @@ public without sharing class ResgateService {
             ProdutoResgate__c = produtoId,
             Pontos_Utilizados__c = produto.Custo_Pontos__c,
             Status__c = 'Solicitado',
-            Codigo_Retirada__c = gerarCodigoRetirada()
+            Codigo_Retirada__c = gerarCodigoRetirada(),
+            Documento__c = documento
         );
         insert resgate;
 
@@ -41,6 +46,59 @@ public without sharing class ResgateService {
         enviarEmailConfirmacao(cliente, produto, resgate, saldoAposResgate);
 
         return resgate.Id;
+    }
+
+    @TestVisible
+    private static Boolean documentoValido(String documento) {
+        if (String.isBlank(documento)) {
+            return false;
+        }
+        String apenasDigitos = documento.replaceAll('[^0-9]', '');
+
+        if (apenasDigitos.length() == 11) {
+            return cpfValido(apenasDigitos);
+        }
+
+        // RG nao tem um digito verificador padrao unico no Brasil (varia por estado) -
+        // aqui so validamos um tamanho plausivel e que nao seja uma sequencia repetida.
+        return apenasDigitos.length() >= 5 && apenasDigitos.length() <= 12 && !todosDigitosIguais(apenasDigitos);
+    }
+
+    private static Boolean cpfValido(String cpf) {
+        if (todosDigitosIguais(cpf)) {
+            return false;
+        }
+
+        Integer soma = 0;
+        for (Integer i = 0; i < 9; i++) {
+            soma += Integer.valueOf(cpf.substring(i, i + 1)) * (10 - i);
+        }
+        Integer primeiroDigito = Math.mod(soma * 10, 11);
+        if (primeiroDigito == 10) {
+            primeiroDigito = 0;
+        }
+        if (primeiroDigito != Integer.valueOf(cpf.substring(9, 10))) {
+            return false;
+        }
+
+        soma = 0;
+        for (Integer i = 0; i < 10; i++) {
+            soma += Integer.valueOf(cpf.substring(i, i + 1)) * (11 - i);
+        }
+        Integer segundoDigito = Math.mod(soma * 10, 11);
+        if (segundoDigito == 10) {
+            segundoDigito = 0;
+        }
+        return segundoDigito == Integer.valueOf(cpf.substring(10, 11));
+    }
+
+    private static Boolean todosDigitosIguais(String digitos) {
+        for (Integer i = 1; i < digitos.length(); i++) {
+            if (digitos.substring(i, i + 1) != digitos.substring(0, 1)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @TestVisible
@@ -82,7 +140,7 @@ public without sharing class ResgateService {
                 'Saldo de pontos restante: ' + saldoAposResgate + '\n' +
                 '-------------------------------------------\n\n' +
                 'RETIRADA NA LOJA\n' +
-                'Apresente este codigo no caixa para retirar seu produto:\n\n' +
+                'Apresente este codigo e um documento com foto (' + resgate.Documento__c + ') no caixa para retirar seu produto:\n\n' +
                 resgate.Codigo_Retirada__c + '\n\n' +
                 '(o codigo tambem aparece como QR code na versao HTML deste e-mail e na tela de confirmacao do site)\n\n' +
                 'Obrigado por participar do Mercado Pontos!'

@@ -1,6 +1,8 @@
 @IsTest
 private class ResgateServiceTest {
 
+    private static final String CPF_VALIDO_TESTE = '111.444.777-35';
+
     @TestSetup
     static void setup() {
         insert new Contact(LastName = 'Cliente Teste', Email = 'cliente.teste@resgate.invalid', Saldo_Pontos__c = 100);
@@ -17,12 +19,17 @@ private class ResgateServiceTest {
         ProdutoResgate__c produto = [SELECT Id FROM ProdutoResgate__c WHERE Name = 'Oleo de Soja 900ml' LIMIT 1];
 
         Test.startTest();
-        Id resgateId = ResgateService.resgatarProduto(cliente.Id, produto.Id);
+        Id resgateId = ResgateService.resgatarProduto(cliente.Id, produto.Id, CPF_VALIDO_TESTE);
         Test.stopTest();
 
-        Resgate__c resgate = [SELECT Status__c, Pontos_Utilizados__c, Codigo_Retirada__c FROM Resgate__c WHERE Id = :resgateId];
+        Resgate__c resgate = [
+            SELECT Status__c, Pontos_Utilizados__c, Codigo_Retirada__c, Documento__c
+            FROM Resgate__c
+            WHERE Id = :resgateId
+        ];
         System.assertEquals('Solicitado', resgate.Status__c);
         System.assertEquals(40, resgate.Pontos_Utilizados__c);
+        System.assertEquals(CPF_VALIDO_TESTE, resgate.Documento__c);
         System.assertNotEquals(null, resgate.Codigo_Retirada__c);
         System.assertEquals(8, resgate.Codigo_Retirada__c.length());
         System.assert(Pattern.matches('^[A-Z0-9]{8}$', resgate.Codigo_Retirada__c));
@@ -47,6 +54,37 @@ private class ResgateServiceTest {
     }
 
     @IsTest
+    static void validaDocumentos() {
+        Test.startTest();
+        System.assertEquals(true, ResgateService.documentoValido(CPF_VALIDO_TESTE), 'CPF valido deveria passar');
+        System.assertEquals(false, ResgateService.documentoValido('111.111.111-11'), 'CPF com digitos repetidos deveria falhar');
+        System.assertEquals(false, ResgateService.documentoValido('123.456.789-00'), 'CPF com digito verificador errado deveria falhar');
+        System.assertEquals(true, ResgateService.documentoValido('12.345.678-9'), 'RG plausivel deveria passar');
+        System.assertEquals(false, ResgateService.documentoValido('123'), 'Documento curto demais deveria falhar');
+        System.assertEquals(false, ResgateService.documentoValido(null), 'Documento vazio deveria falhar');
+        System.assertEquals(false, ResgateService.documentoValido(''), 'Documento em branco deveria falhar');
+        Test.stopTest();
+    }
+
+    @IsTest
+    static void bloqueiaResgateSemDocumentoValido() {
+        Contact cliente = [SELECT Id FROM Contact LIMIT 1];
+        ProdutoResgate__c produto = [SELECT Id FROM ProdutoResgate__c WHERE Name = 'Oleo de Soja 900ml' LIMIT 1];
+
+        Test.startTest();
+        Boolean lancouExcecao = false;
+        try {
+            ResgateService.resgatarProduto(cliente.Id, produto.Id, '123.456.789-00');
+        } catch (ResgateService.ResgateException e) {
+            lancouExcecao = true;
+            System.assert(e.getMessage().contains('documento'));
+        }
+        Test.stopTest();
+
+        System.assertEquals(true, lancouExcecao);
+    }
+
+    @IsTest
     static void bloqueiaResgateComSaldoInsuficiente() {
         Contact cliente = [SELECT Id FROM Contact LIMIT 1];
         ProdutoResgate__c produto = [SELECT Id FROM ProdutoResgate__c WHERE Name = 'Produto Caro Demais' LIMIT 1];
@@ -54,7 +92,7 @@ private class ResgateServiceTest {
         Test.startTest();
         Boolean lancouExcecao = false;
         try {
-            ResgateService.resgatarProduto(cliente.Id, produto.Id);
+            ResgateService.resgatarProduto(cliente.Id, produto.Id, CPF_VALIDO_TESTE);
         } catch (ResgateService.ResgateException e) {
             lancouExcecao = true;
             System.assert(e.getMessage().contains('Saldo'));
@@ -72,7 +110,7 @@ private class ResgateServiceTest {
         Test.startTest();
         Boolean lancouExcecao = false;
         try {
-            ResgateService.resgatarProduto(cliente.Id, produto.Id);
+            ResgateService.resgatarProduto(cliente.Id, produto.Id, CPF_VALIDO_TESTE);
         } catch (ResgateService.ResgateException e) {
             lancouExcecao = true;
             System.assert(e.getMessage().contains('disponivel'));
