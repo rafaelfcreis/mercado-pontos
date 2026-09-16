@@ -108,10 +108,194 @@ atividade.
 ---
 
 ## II - Planejamento para Desenvolvimento do Projeto
-*(a ser preenchido — cronograma real, envolvimento do público, indicadores)*
+
+> Nota sobre origem: o cronograma abaixo usa as datas reais dos commits do
+> repositório git do projeto como evidência objetiva de quando cada etapa
+> foi executada (não são datas estimadas). O texto de cada ação foi
+> redigido pela IA a partir desse histórico real, em conversa com o autor.
+
+### 1. Plano de trabalho com cronograma das atividades
+
+**Objetivo 1:** Desenvolver e publicar um site funcional (Experience Cloud)
+onde o cliente envia o texto da nota fiscal e recebe pontos calculados
+automaticamente, até `[AJUSTAR: data de entrega]`. Prazo: `[AJUSTAR]`
+
+**Ação 1 — Definição da arquitetura e modelo de dados** (06/09/2026)
+Como fazer: levantamento das ferramentas de IA nativas disponíveis no
+Salesforce (Prompt Builder, Agentforce) já licenciadas no org, escolha da
+stack (Apex + LWC + Experience Cloud), modelagem dos objetos
+`NotaFiscal__c`, `ItemNotaFiscal__c`, `ProdutoResgate__c`, `Resgate__c`.
+Para quem: o próprio autor. Onde: ambiente de desenvolvimento Salesforce
+(org `doacao-org`, Developer Edition), com apoio do assistente de IA
+Claude Code para pair-programming.
+
+**Ação 2 — Lógica de negócio e interface (LWC)** (06/09/2026)
+Como fazer: implementação dos serviços Apex de processamento de nota
+fiscal e resgate de pontos, com testes automatizados (cobertura acima de
+95%), e dos componentes de interface (`enviarNotaFiscal`, `extratoPontos`,
+`catalogoResgate`).
+
+**Ação 3 — Diagnóstico com a comunidade informal** (a partir de
+`[AJUSTAR: data em que a mensagem foi enviada]`)
+Como fazer: envio de mensagem de texto (WhatsApp) para família/amigos com
+perguntas sobre hábitos de compra, uso de programas de fidelidade e
+familiaridade com IA (ver texto completo na Parte I). Para quem: círculo
+social informal do autor. Onde: conversas remotas por mensagem.
+`[AJUSTAR: confirmar quando as respostas foram recebidas]`
+
+**Ação 4 — Integração de IA generativa** (12 a 13/09/2026)
+Como fazer: tentativa de extração de dados da nota fiscal via Einstein
+Prompt Builder chamado por Apex; ao esbarrar em um bug de plataforma na
+ativação do template (documentado na Parte III), pivot para usar o
+Agentforce como camada conversacional de IA, com uma ação Apex
+determinística (`RegistrarNotaFiscalAction`) para persistência dos dados.
+
+**Ação 5 — Publicação do site Experience Cloud** (14/09/2026)
+Como fazer: criação do site "Mercado Pontos" (template Build Your Own
+LWR), configuração de self-registration e permissões de acesso
+(profiles), publicação e teste real por um usuário de fora do ambiente de
+desenvolvimento.
+
+**Ação 6 — Refinamento a partir do uso real** (14 a 16/09/2026)
+Como fazer: correção de problemas encontrados apenas durante o uso real do
+site publicado (formatação de valores, imagens do catálogo, idioma da
+tela de login), adição de melhorias de experiência (catálogo responsivo,
+tela de checkout de resgate com confirmação, formulário de endereço de
+entrega, cabeçalho do site). Detalhes completos na Parte III.
+
+**Outras ações pendentes:** `[AJUSTAR: pesquisa de satisfação com a
+comunidade, gravação de vídeo demo, etc.]`
+
+### 2. Envolvimento do público participante
+
+O público (comunidade informal) participa em dois momentos: (1) na etapa
+de diagnóstico, respondendo às perguntas sobre hábitos de compra e
+fidelidade que embasaram a situação-problema da Parte I; (2)
+`[AJUSTAR: se o grupo também testou o site publicado depois de pronto,
+descrever aqui — ex: pediu para 2-3 pessoas do grupo se cadastrarem e
+testarem o envio de uma nota fiscal real]`.
+
+Registros de evidência: `[AJUSTAR: prints das conversas de diagnóstico;
+se houver, prints do feedback de quem testou o site]`.
+
+### 3. Avaliação dos resultados alcançados
+
+**Objetivo 1** (site funcional publicado): avaliado objetivamente — o site
+está publicado e ao vivo, testado com um fluxo real de ponta a ponta
+(cadastro → envio de nota → crédito de pontos → resgate com endereço de
+entrega), com o código versionado publicamente em git.
+
+**Objetivo 2** (redução do desconhecimento sobre IA): `[AJUSTAR: aplicar o
+questionário de satisfação/aprendizado combinado com o grupo e resumir os
+resultados aqui]`.
 
 ## III - Encerramento do Projeto
-*(a ser preenchido ao final, após a coleta de evidências)*
+
+### 1. Relato da experiência individual no desenvolvimento da atividade
+
+**1. Contextualização** `[AJUSTAR: escrever em primeira pessoa — como foi
+a experiência, como os conteúdos da disciplina de IA para Devs se
+conectaram com a prática de construir uma solução real de IA generativa
+aplicada a um problema do dia a dia]`
+
+**2. Metodologia**
+
+O desenvolvimento foi feito em pareceria com um assistente de IA (Claude
+Code), com todo o histórico de decisões, prompts e ações registrado (ver
+`docs/historico-conversa-claude-code.md`, gerado por
+`scripts/gerar-historico-claude.ps1`). O projeto foi versionado em git
+desde o primeiro commit, com mensagens descrevendo cada etapa e cada
+problema real encontrado.
+
+**3. Resultados e Discussão**
+
+O resultado técnico é um site publicado e funcional (Experience Cloud,
+Apex, LWC, Agentforce) que resolve a situação-problema identificada. Mas
+o valor mais interessante deste trabalho, para uma disciplina de
+Inteligência Artificial para Devs, está nas **dificuldades reais
+enfrentadas e como foram investigadas e contornadas** — a maioria delas
+bugs de plataforma genuínos, não erros de configuração:
+
+1. **Metadata inválido**: campos `MasterDetail` e `LongTextArea` não
+   aceitam a tag `required` no Metadata API.
+2. **FLS (Field-Level Security) de campos opcionais**: campos custom
+   criados via Metadata API não ganham permissão de leitura automática no
+   profile Admin nem em profiles de portal — só campos obrigatórios ficam
+   implicitamente visíveis. Descoberto porque consultas SOQL simples
+   devolviam erro de "coluna inexistente" mesmo logado como
+   administrador do sistema.
+3. **Bug real do Einstein Prompt Builder**: o template de extração de
+   dados funcionava perfeitamente no modo Preview, mas nunca podia ser
+   chamado via Apex (`ConnectApi.EinsteinLLM`), sempre retornando "No
+   active template version" — mesmo após deploy com status Published,
+   recriação do template do zero e troca de modelo (GPT-5 Mini, Claude
+   via Bedrock). Investigação (incluindo pesquisa de uma issue pública no
+   GitHub do Salesforce CLI) revelou que é um bug conhecido: o schema do
+   `GenAiPromptTemplate` mudou de número de versão inteiro para um hash,
+   e o deploy via Metadata API não consegue apontar esse ponteiro
+   corretamente.
+4. **Pivot de arquitetura**: diante do bug acima, a extração de dados da
+   nota fiscal foi movida do Prompt Builder isolado para uma conversa com
+   um Agent do Agentforce, que interpreta o texto e chama uma ação Apex
+   determinística — uma decisão de engenharia tomada em tempo real diante
+   de uma limitação de plataforma, não o plano original.
+5. **Segundo bug de IA generativa, agora no Agentforce**: mesmo com o
+   Agent configurado corretamente (ação anexada, variáveis mapeadas,
+   versão comitada e agente ativado), o Trace do Agent Builder sempre
+   mostrava "Available Actions: 0 Actions" — a ação nunca era
+   efetivamente chamada. Confirmado via metadata que nenhum
+   `GenAiFunction` correspondente havia sido realmente criado no org,
+   apesar da UI mostrar tudo configurado. Mesma categoria de bug do item
+   3: interface mostra "pronto", backend não reflete isso.
+6. **"Portal account owner must have a role"**: erro real do Salesforce
+   ao tentar vincular uma Account a um usuário de self-registration — a
+   Account precisa que seu dono (owner) tenha um Role atribuído,
+   descoberto tanto em testes automatizados quanto em produção real (via
+   e-mail de erro do próprio Salesforce ao tentar se cadastrar no site).
+7. **Erro de mixed-DML na própria tela de administração do Salesforce**:
+   a tela padrão "Login & Registration" do Experience Builder,
+   ironicamente, falhava ao salvar com o erro clássico de Apex "DML
+   operation on setup object is not permitted after you have updated a
+   non-setup object" — contornado atualizando o registro
+   `NetworkSelfRegistration` diretamente pela API de dados.
+8. **CSP bloqueando imagens externas**: imagens do catálogo de produtos
+   não carregavam porque o domínio usado não estava na lista de CSP
+   Trusted Sites do site — resolvido adicionando o domínio via metadata.
+9. **Formatação de valores monetários**: um campo de valor com
+   `formatter="currency"` interpretava "137.40" como 13740 (tratando o
+   ponto como separador de milhar, não decimal) — trocado por um campo de
+   texto com normalização manual, mais tolerante ao formato brasileiro.
+
+Essas descobertas mostram na prática algo central pra disciplina: **usar
+IA generativa em produção não é só "chamar uma API"** — envolve lidar com
+imaturidade de plataforma, debugar com evidência real (queries, logs de
+deploy, pesquisa de issues públicas) em vez de tentativa e erro cego, e
+tomar decisões de arquitetura (como o pivot Prompt Builder → Agentforce)
+quando a solução ideal esbarra em uma limitação real.
+
+`[AJUSTAR: complementar com impressões pessoais, o que foi mais
+desafiador, o que aprendeu.]`
+
+Resultados conforme a Seção 3 da Parte II: `[AJUSTAR conforme preenchido
+acima]`.
+
+### 2. Evidências das atividades realizadas
+
+`[AJUSTAR: redigir a contextualização de cada evidência antes de anexar]`
+
+- Link do repositório git (histórico completo de commits):
+  `[AJUSTAR: link do repositório, se publicado remotamente, ou indicar que
+  é local]`
+- `docs/historico-conversa-claude-code.md` — histórico completo da
+  conversa de desenvolvimento com a IA (reexecutar
+  `scripts/gerar-historico-claude.ps1` antes de anexar, para pegar a
+  versão mais atualizada).
+- Site publicado: https://orgfarm-375b864f55-dev-ed.develop.my.site.com/mercadopontos
+- `[AJUSTAR: prints do Object Manager (modelo de dados), das classes Apex
+  e cobertura de testes, dos componentes LWC, do Agent Builder
+  (Agentforce), do site publicado (Home, envio de nota, catálogo,
+  checkout de resgate), e das conversas de diagnóstico com a comunidade]`
+- `[AJUSTAR: mensagens/e-mails trocados com a comunidade informal]`
 
 ---
 
@@ -120,10 +304,13 @@ atividade.
 1. Enviar a mensagem de diagnóstico (já combinada) para 6-10 pessoas reais e
    substituir todos os `[AJUSTAR: ...]` da Parte I pelas respostas genuínas.
 2. Guardar prints das conversas — viram evidência na Parte III.
-3. Preencher a Parte II depois que o site estiver publicado.
-4. Preencher a Parte III (relato individual + evidências) por último, com
-   prints do Object Manager, Apex, LWC, Prompt Builder, Agentforce, site
-   publicado, e o link deste repositório git.
+3. ~~Preencher a Parte II depois que o site estiver publicado~~ — Parte II
+   preenchida (site já publicado e testado); falta só os `[AJUSTAR]` que
+   dependem das respostas reais da comunidade.
+4. ~~Preencher a Parte III~~ — rascunho já feito, com a lista completa dos
+   bugs reais de plataforma encontrados e contornados; falta só as
+   impressões pessoais em primeira pessoa e anexar as evidências (prints,
+   link do git).
 
 ## Fontes
 
