@@ -334,6 +334,12 @@ bugs de plataforma genuínos, não erros de configuração:
 8. **CSP bloqueando imagens externas**: imagens do catálogo de produtos
    não carregavam porque o domínio usado não estava na lista de CSP
    Trusted Sites do site — resolvido adicionando o domínio via metadata.
+   O mesmo cuidado foi necessário ao trocar, no fim do projeto, as imagens
+   de marcação de lugar por fotografias reais dos produtos (banco de
+   imagens livre Pixabay): sem liberar `cdn.pixabay.com` no CSP, o
+   catálogo voltaria a aparecer sem imagem alguma. As fotos escolhidas são
+   genéricas e sem marcas visíveis, para não introduzir identidade de
+   terceiros no site — mesmo critério aplicado aos e-mails (item 11).
 9. **Formatação de valores monetários**: um campo de valor com
    `formatter="currency"` interpretava "137.40" como 13740 (tratando o
    ponto como separador de milhar, não decimal) — trocado por um campo de
