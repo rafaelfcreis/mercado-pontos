@@ -265,6 +265,17 @@ bugs de plataforma genuínos, não erros de configuração:
    `formatter="currency"` interpretava "137.40" como 13740 (tratando o
    ponto como separador de milhar, não decimal) — trocado por um campo de
    texto com normalização manual, mais tolerante ao formato brasileiro.
+10. **Leitura de imagem no Agentforce não disponível neste org**: a
+    Salesforce documenta publicamente que o Agentforce suporta entrada
+    multimodal (imagem, PDF), citando leitura de recibo/nota fiscal como
+    caso de uso — o que seria uma evolução natural deste projeto (enviar a
+    foto da nota em vez de colar o texto). Na prática, o chat de teste do
+    Agent Builder deste org (Developer Edition) só oferece entrada de
+    áudio, sem nenhum ícone de anexar imagem — indicando que esse recurso
+    provavelmente depende de Data Cloud efetivamente configurado (não
+    basta ter a licença, que este org já tem), algo fora do escopo deste
+    trabalho. Documentado como uma limitação real e consciente, não uma
+    tentativa malsucedida às cegas.
 
 Essas descobertas mostram na prática algo central pra disciplina: **usar
 IA generativa em produção não é só "chamar uma API"** — envolve lidar com
@@ -320,3 +331,8 @@ embasar a seção "Situação-problema" com dados reais de mercado:
 1. [88% dos brasileiros utilizam programas de fidelidade, diz pesquisa da Abemf](https://www.panrotas.com.br/mercado/pesquisas-e-estatisticas/2025/10/88-dos-brasileiros-utilizam-programas-de-fidelidade-diz-pesquisa-da-abemf_222537.html) — Panrotas
 2. [Sete em cada dez brasileiros já aderiram a programas de fidelidade em supermercados](https://www.superhiper.com.br/sete-em-cada-dez-brasileiros-ja-aderiram-a-programas-de-fidelidade-em-supermercados/) — SuperHiper
 3. [88% dos brasileiros utilizam programas de fidelidade, segundo pesquisa](https://www.apras.org.br/noticias/88-dos-brasileiros-utilizam-programas-de-fidelidade-segundo-pesquisa/) — APRAS
+
+Buscadas em 2026-09-16, para embasar duas decisões de design reais do projeto:
+
+4. [Dúvidas Frequentes — Pão de Açúcar (retirada de prêmio físico em loja, não entrega)](https://www.paodeacucar.com/duvidas-frequentes/7/7.22/como-funciona-o-pagstix) — motivou a mudança do resgate de "entrega por Correios" para "retirada em loja com QR code" (item de Resultados e Discussão).
+5. [Turn Images & PDFs Into AI-Powered Insights With Agentforce — Salesforce Admins](https://admin.salesforce.com/blog/2025/turn-images-pdfs-into-ai-powered-insights-with-agentforce) — confirma que leitura de imagem/recibo é um recurso real do Agentforce (não disponível neste org especificamente, ver item 10 de Resultados e Discussão).
