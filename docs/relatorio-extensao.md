@@ -276,6 +276,24 @@ bugs de plataforma genuínos, não erros de configuração:
     basta ter a licença, que este org já tem), algo fora do escopo deste
     trabalho. Documentado como uma limitação real e consciente, não uma
     tentativa malsucedida às cegas.
+11. **E-mails do site vazando identidade de outro projeto**: os e-mails
+    padrão do Salesforce (boas-vindas, nova senha) são **templates
+    compartilhados por todos os sites do mesmo org** — incluindo o do
+    outro trabalho acadêmico (Sistemas de Informação e Sociedade) que usa
+    este mesmo org. A assinatura padrão usa `{!Organization.Name}`, que
+    mostrava o nome da organização real do org (não relacionado a nenhum
+    dos dois projetos). Editar os templates diretamente resolve os dois
+    sites de uma vez (trocado por uma assinatura genérica, "Salesforce")
+    sem precisar duplicar templates por site — mas exigiu identificar,
+    consultando os templates via SOQL (a Metadata API não consegue nem
+    recuperar esses templates de sistema, só a API de dados consegue),
+    quais dos 11 templates realmente usavam esse campo (só 2 usavam; os
+    outros 9 já usam `{!Community_Name}`, que é seguro). Também
+    identificado que o **idioma padrão do org inteiro** está em inglês
+    (`en_US`), o que faz novos usuários que se autocadastram no site
+    herdarem inglês por padrão, mesmo o site estando configurado em
+    português — corrigido usuário por usuário conforme aparecem, já que
+    mudar o padrão do org afetaria os dois projetos.
 
 Essas descobertas mostram na prática algo central pra disciplina: **usar
 IA generativa em produção não é só "chamar uma API"** — envolve lidar com
