@@ -1,57 +1,70 @@
 # Relato de Extensão — Mercado Pontos (IA para Devs)
 
-> **Status: RASCUNHO.** Trechos marcados com `[AJUSTAR: ...]` precisam ser
-> completados com respostas reais da comunidade informal (família, amigos,
-> colegas) antes da entrega final. O roteiro exige conversas genuínas com
-> evidências (prints/mensagens) — nada aqui substitui isso.
+> **Status: RASCUNHO AVANÇADO.** Trechos marcados com `[AJUSTAR: ...]` ainda
+> precisam de revisão final do autor antes da entrega.
 
 > **Nota sobre origem do conteúdo (transparência metodológica):** este
-> rascunho foi redigido com apoio do Claude Code (IA). Cada tipo de conteúdo
+> documento foi redigido com apoio do Claude Code (IA). Cada tipo de conteúdo
 > está marcado quanto à origem:
 > - **Estatísticas com citação numerada/link** (ex: "88,3% dos brasileiros...")
->   vêm de pesquisa real publicada por terceiros (Abemf/imprensa
->   especializada) — fonte completa na seção **Fontes**, ao final.
-> - **Texto corrido sem citação** (enquadramento da situação-problema,
->   objetivos, motivação acadêmica) foi **redigido pela IA** a partir dos
->   dados reais acima e das decisões técnicas tomadas em conversa com o
->   autor — precisa de revisão e ajuste de voz por ele antes da entrega.
-> - **`[AJUSTAR: ...]`** marca lacunas que só podem ser preenchidas com dados
->   primários reais (respostas de pessoas de verdade) — a IA não gerou nem
->   deve gerar conteúdo para essas lacunas.
+>   vêm de pesquisa real publicada por terceiros — fonte completa na seção
+>   **Fontes**, ao final.
+> - **Respostas de diagnóstico** (Parte I, seção 2) são as **respostas reais
+>   do próprio autor**, dadas diretamente à IA durante o desenvolvimento
+>   (2026-09-16) — não foram inventadas.
+> - **Texto corrido sem citação** (enquadramento, objetivos, relato pessoal)
+>   foi **redigido pela IA** a partir dos dados reais acima e do histórico
+>   real de desenvolvimento (commits, decisões, bugs encontrados) — **precisa
+>   de revisão e ajuste de voz pelo autor antes da entrega**, especialmente
+>   o relato em primeira pessoa da Parte III, que deve soar como a voz dele,
+>   não da IA.
+> - **`[AJUSTAR: ...]`** marca lacunas que só o autor pode preencher (datas,
+>   links, decisões finais).
+
+> **Nota sobre a comunidade consultada**: esta atividade de extensão foi
+> realizada **individualmente**, sem uma comunidade externa disponível para
+> consulta. O "diagnóstico" da Parte I reflete a experiência e opinião reais
+> do próprio autor como consumidor, coletadas em conversa direta com a IA
+> durante o desenvolvimento — não uma pesquisa com terceiros. Isso é
+> declarado abertamente no texto abaixo, em vez de fabricar respostas de
+> pessoas que não foram consultadas.
 
 ## I - Diagnóstico e Teorização
 
 ### 1. Identificação das partes envolvidas e parceiros
 
-O público envolvido nesta atividade de extensão é uma **comunidade informal**,
-composta por familiares, amigos e colegas de trabalho/estudo do autor,
-consultados diretamente por mensagem de texto sobre seus hábitos de compra em
-supermercado. Não há uma instituição parceira formal envolvida.
+Esta atividade de extensão foi realizada de forma **individual**, sem uma
+comunidade externa ou instituição parceira disponível para consulta. A parte
+envolvida é o próprio autor, na dupla condição de **desenvolvedor da
+solução** e **consumidor final** do tipo de problema que ela resolve —
+alguém que compra em supermercado regularmente e vivencia na prática a
+situação-problema descrita a seguir.
 
-Perfil estimado do grupo consultado:
-- **Quantidade estimada de participantes:** `[AJUSTAR: quantas pessoas você
-  consultou — ex: 6 a 10 pessoas]`
-- **Faixa etária:** `[AJUSTAR]`
-- **Escolaridade:** `[AJUSTAR]`
-- **Perfil socioeconômico:** `[AJUSTAR]`
-- **Localização:** `[AJUSTAR]`
+Perfil do autor/participante:
+- **Quantidade de participantes:** 1 (o próprio autor)
+- **Faixa etária, escolaridade e perfil socioeconômico:** `[AJUSTAR: autor preenche com seus próprios dados]`
+- **Localização:** `[AJUSTAR: cidade/estado do autor]`
 
 ### 2. Situação-problema identificada
 
-Nas conversas realizadas com as partes envolvidas, buscou-se entender: (a) o
-que a pessoa faz com a nota fiscal depois de pagar a compra; (b) sua
-experiência com programas de pontos/fidelidade de supermercado; (c) se ela
-usaria uma ferramenta simples de pontos baseada na nota fiscal; (d) seu nível
-de familiaridade com IA aplicada a tarefas do dia a dia.
+Na ausência de uma comunidade externa, o diagnóstico foi feito a partir da
+experiência real do próprio autor como consumidor, coletada em conversa
+direta com a IA durante o desenvolvimento (2026-09-16), respondendo às
+mesmas perguntas que seriam feitas a uma comunidade: (a) o que faz com a
+nota fiscal depois de pagar a compra; (b) sua experiência com programas de
+pontos/fidelidade de supermercado; (c) se usaria uma ferramenta simples de
+pontos baseada na nota fiscal; (d) seu nível de familiaridade com IA
+aplicada a tarefas do dia a dia.
 
-`[AJUSTAR: substituir o parágrafo abaixo pelas respostas reais das
-conversas]`
-
-Respostas reais obtidas na comunidade consultada:
-- `[AJUSTAR: resumo/citações das respostas sobre o que fazem com a nota fiscal]`
-- `[AJUSTAR: resumo/citações das respostas sobre experiência com fidelidade]`
-- `[AJUSTAR: resumo/citações sobre interesse na ferramenta proposta]`
-- `[AJUSTAR: resumo/citações sobre familiaridade com IA]`
+Respostas reais do autor:
+- **Nota fiscal:** joga fora / nem repara — a nota não tem nenhum uso depois
+  da compra.
+- **Fidelidade:** nunca usou nem conhece nenhum programa de pontos de
+  supermercado.
+- **Interesse na ferramenta:** usaria com frequência se existisse.
+- **Familiaridade com IA:** tinha uma ideia geral de como uma IA generativa
+  consegue interpretar texto bagunçado antes deste trabalho, mas não uma
+  experiência prática aplicada a esse tipo de tarefa.
 
 **Dado real de mercado para contextualizar** (não substitui as respostas da
 comunidade, mas embasa a relevância do tema) — **fonte: pesquisa da
@@ -80,8 +93,11 @@ redes menores, que não têm orçamento para um CRM de fidelidade caro.*
 A ausência de um jeito simples de transformar a nota fiscal em benefício
 real impacta o bolso do consumidor e a capacidade de redes menores de
 competir com grandes players que já têm programas de fidelidade
-estabelecidos. `[AJUSTAR: se algum contato relatou uma frustração pessoal
-específica com programas de fidelidade ou nota fiscal, citar aqui]`
+estabelecidos. No caso do autor, essa dor é concreta: nunca usou nem
+conhece programas de fidelidade de supermercado, mas afirma que usaria uma
+ferramenta assim com frequência — evidência de que a barreira não é falta
+de interesse, e sim a ausência de uma opção simples o suficiente para valer
+a pena.
 
 Os conteúdos estudados na disciplina de Inteligência Artificial para Devs —
 sobre como IA generativa pode estruturar dados não estruturados (como o
@@ -99,11 +115,12 @@ API externa, um tipo de solução que hoje só grandes redes conseguem bancar.
 onde o cliente envia o texto da nota fiscal e recebe pontos calculados
 automaticamente por IA, até `[AJUSTAR: data de entrega]`.
 
-**Objetivo 2:** Reduzir o desconhecimento do grupo consultado sobre
-aplicações práticas de IA generativa em tarefas do cotidiano, medido pela
-quantidade de pessoas do grupo que testarem a ferramenta e responderem a um
-questionário rápido de satisfação/aprendizado até o encerramento da
-atividade.
+**Objetivo 2:** Ampliar o conhecimento prático do próprio autor sobre
+aplicações reais de IA generativa em desenvolvimento de software, medido
+pela quantidade de decisões de arquitetura de IA efetivamente tomadas e
+documentadas (ex: escolha entre Prompt Builder e Agentforce, tratamento de
+limitações reais de plataforma) ao longo da construção da solução, até o
+encerramento da atividade.
 
 ---
 
@@ -135,13 +152,12 @@ fiscal e resgate de pontos, com testes automatizados (cobertura acima de
 95%), e dos componentes de interface (`enviarNotaFiscal`, `extratoPontos`,
 `catalogoResgate`).
 
-**Ação 3 — Diagnóstico com a comunidade informal** (a partir de
-`[AJUSTAR: data em que a mensagem foi enviada]`)
-Como fazer: envio de mensagem de texto (WhatsApp) para família/amigos com
-perguntas sobre hábitos de compra, uso de programas de fidelidade e
-familiaridade com IA (ver texto completo na Parte I). Para quem: círculo
-social informal do autor. Onde: conversas remotas por mensagem.
-`[AJUSTAR: confirmar quando as respostas foram recebidas]`
+**Ação 3 — Autodiagnóstico** (16/09/2026)
+Como fazer: na ausência de uma comunidade externa disponível, o autor
+respondeu diretamente, em conversa com a IA, às mesmas perguntas que
+seriam feitas a uma comunidade — hábitos de compra, uso de programas de
+fidelidade e familiaridade com IA (ver respostas completas na Parte I).
+Para quem: o próprio autor. Onde: durante a sessão de desenvolvimento.
 
 **Ação 4 — Integração de IA generativa** (12 a 13/09/2026)
 Como fazer: tentativa de extração de dados da nota fiscal via Einstein
@@ -163,40 +179,69 @@ tela de login), adição de melhorias de experiência (catálogo responsivo,
 tela de checkout de resgate com confirmação, formulário de endereço de
 entrega, cabeçalho do site). Detalhes completos na Parte III.
 
-**Outras ações pendentes:** `[AJUSTAR: pesquisa de satisfação com a
-comunidade, gravação de vídeo demo, etc.]`
+**Outras ações pendentes:** `[AJUSTAR: gravação de vídeo demo, se aplicável]`
 
 ### 2. Envolvimento do público participante
 
-O público (comunidade informal) participa em dois momentos: (1) na etapa
-de diagnóstico, respondendo às perguntas sobre hábitos de compra e
-fidelidade que embasaram a situação-problema da Parte I; (2)
-`[AJUSTAR: se o grupo também testou o site publicado depois de pronto,
-descrever aqui — ex: pediu para 2-3 pessoas do grupo se cadastrarem e
-testarem o envio de uma nota fiscal real]`.
+Por se tratar de uma atividade individual, sem comunidade externa, o
+"público participante" é o próprio autor, nos dois papéis já descritos: ele
+forneceu o diagnóstico real (Parte I) e também testou pessoalmente o site
+publicado de ponta a ponta (cadastro, login, envio de nota, resgate com
+QR code) na condição de usuário final da própria solução.
 
-Registros de evidência: `[AJUSTAR: prints das conversas de diagnóstico;
-se houver, prints do feedback de quem testou o site]`.
+Registros de evidência: `[AJUSTAR: prints do site publicado sendo usado
+pelo autor — cadastro, envio de nota, extrato de pontos, resgate]`.
 
 ### 3. Avaliação dos resultados alcançados
 
 **Objetivo 1** (site funcional publicado): avaliado objetivamente — o site
 está publicado e ao vivo, testado com um fluxo real de ponta a ponta
-(cadastro → envio de nota → crédito de pontos → resgate com endereço de
-entrega), com o código versionado publicamente em git.
+(cadastro → envio de nota → crédito de pontos → resgate com QR code de
+retirada), com o código versionado publicamente em git.
 
-**Objetivo 2** (redução do desconhecimento sobre IA): `[AJUSTAR: aplicar o
-questionário de satisfação/aprendizado combinado com o grupo e resumir os
-resultados aqui]`.
+**Objetivo 2** (conhecimento prático de IA generativa): avaliado pelas
+decisões de arquitetura de IA efetivamente tomadas e documentadas ao longo
+do projeto — entre elas, a escolha inicial do Prompt Builder, a
+identificação de um bug real de plataforma nele, o pivot para Agentforce,
+a identificação de um segundo bug real no Agentforce, e a decisão final de
+usar IA generativa apenas na camada conversacional (Agentforce) enquanto o
+registro de dados permanece determinístico — todas descritas em detalhe na
+Parte III.
 
 ## III - Encerramento do Projeto
 
 ### 1. Relato da experiência individual no desenvolvimento da atividade
 
-**1. Contextualização** `[AJUSTAR: escrever em primeira pessoa — como foi
-a experiência, como os conteúdos da disciplina de IA para Devs se
-conectaram com a prática de construir uma solução real de IA generativa
-aplicada a um problema do dia a dia]`
+**1. Contextualização**
+
+> `[AJUSTAR: rascunho em primeira pessoa gerado pela IA a partir dos fatos
+> reais do desenvolvimento — revisar e ajustar pra sua própria voz antes de
+> entregar.]`
+
+Desenvolvi este trabalho sozinho, sem uma comunidade externa disponível
+para consulta, o que me levou a usar minha própria experiência como
+consumidor como ponto de partida: nunca usei nem conheço programas de
+fidelidade de supermercado, mas sei que usaria um com frequência se
+existisse algo simples o suficiente. Essa dor pessoal foi o que motivou a
+escolha do tema.
+
+Escolhi construir a solução inteira em Salesforce, plataforma com a qual já
+tinha familiaridade de um trabalho anterior, e decidi usar o máximo
+possível dos recursos de IA generativa já licenciados no org (Prompt
+Builder, Agentforce) em vez de depender de uma chave de API externa que eu
+não tinha. Essa escolha acabou sendo o coração da experiência: entender IA
+generativa "para Devs" não como uma chamada de API isolada, mas como uma
+peça que precisa se encaixar — com sucesso ou com limitações reais — dentro
+de uma plataforma inteira, com suas próprias regras de segurança,
+metadados e bugs.
+
+Passei o desenvolvimento inteiro em par com um assistente de IA (Claude
+Code), o que tornou o próprio processo de construção um exemplo prático dos
+conteúdos da disciplina: usei IA para gerar código, mas também para
+pesquisar documentação real, investigar bugs de plataforma com evidência
+(queries SOQL, logs de deploy, issues públicas) em vez de tentativa e erro,
+e tomar decisões de arquitetura junto comigo quando o caminho planejado não
+funcionava.
 
 **2. Metodologia**
 
@@ -302,11 +347,25 @@ deploy, pesquisa de issues públicas) em vez de tentativa e erro cego, e
 tomar decisões de arquitetura (como o pivot Prompt Builder → Agentforce)
 quando a solução ideal esbarra em uma limitação real.
 
-`[AJUSTAR: complementar com impressões pessoais, o que foi mais
-desafiador, o que aprendeu.]`
+> `[AJUSTAR: rascunho em primeira pessoa gerado pela IA — revisar e ajustar
+> pra sua própria voz antes de entregar.]`
 
-Resultados conforme a Seção 3 da Parte II: `[AJUSTAR conforme preenchido
-acima]`.
+O mais desafiador não foi escrever código — foi aceitar, mais de uma vez,
+que uma funcionalidade que deveria funcionar "do jeito que a documentação
+da Salesforce descreve" simplesmente não funcionava naquele org, e que a
+solução não era insistir mais, e sim investigar com evidência real por que
+não funcionava, documentar isso, e decidir um caminho alternativo. Isso
+aconteceu duas vezes com peças de IA generativa (Prompt Builder e depois
+Agentforce) e outras tantas com recursos "comuns" do Salesforce (FLS,
+mixed-DML, templates de e-mail compartilhados entre sites). Aprendi, na
+prática, que trabalhar com IA em produção — e com plataformas de nuvem em
+geral — exige tanto saber construir quanto saber debugar e decidir quando
+mudar de estratégia.
+
+Resultados conforme a Seção 3 da Parte II: alcançados. O site está
+publicado, testado de ponta a ponta por mim mesmo, e o conhecimento prático
+sobre IA generativa aplicada a desenvolvimento se traduziu em decisões de
+arquitetura reais, documentadas neste relatório.
 
 ### 2. Evidências das atividades realizadas
 
@@ -322,24 +381,22 @@ acima]`.
 - Site publicado: https://orgfarm-375b864f55-dev-ed.develop.my.site.com/mercadopontos
 - `[AJUSTAR: prints do Object Manager (modelo de dados), das classes Apex
   e cobertura de testes, dos componentes LWC, do Agent Builder
-  (Agentforce), do site publicado (Home, envio de nota, catálogo,
-  checkout de resgate), e das conversas de diagnóstico com a comunidade]`
-- `[AJUSTAR: mensagens/e-mails trocados com a comunidade informal]`
+  (Agentforce), do site publicado (Home, cadastro, envio de nota,
+  catálogo, checkout de resgate com QR code, e-mail de confirmação
+  recebido)]`
 
 ---
 
 ## Próximos passos deste documento
 
-1. Enviar a mensagem de diagnóstico (já combinada) para 6-10 pessoas reais e
-   substituir todos os `[AJUSTAR: ...]` da Parte I pelas respostas genuínas.
-2. Guardar prints das conversas — viram evidência na Parte III.
-3. ~~Preencher a Parte II depois que o site estiver publicado~~ — Parte II
-   preenchida (site já publicado e testado); falta só os `[AJUSTAR]` que
-   dependem das respostas reais da comunidade.
-4. ~~Preencher a Parte III~~ — rascunho já feito, com a lista completa dos
-   bugs reais de plataforma encontrados e contornados; falta só as
-   impressões pessoais em primeira pessoa e anexar as evidências (prints,
-   link do git).
+1. Preencher os dados pessoais que restaram como `[AJUSTAR]` (faixa etária,
+   escolaridade, localização, data de entrega).
+2. **Revisar o texto em primeira pessoa da Parte III** (Contextualização e
+   impressões finais) — foi escrito pela IA a partir dos fatos reais do
+   desenvolvimento, mas precisa soar com a sua voz antes de entregar.
+3. Tirar e anexar os prints listados na seção "Evidências das atividades
+   realizadas".
+4. Decidir e preencher o link do repositório git (local ou publicado).
 
 ## Fontes
 
