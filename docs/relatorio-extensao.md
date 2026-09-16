@@ -1,7 +1,10 @@
 # Relato de Extensão — Mercado Pontos (IA para Devs)
 
-> **Status: RASCUNHO AVANÇADO.** Trechos marcados com `[AJUSTAR: ...]` ainda
-> precisam de revisão final do autor antes da entrega.
+> **Status: COMPLETO, aguardando os dados pessoais do autor.** Todo o
+> conteúdo que podia ser apurado a partir do projeto já está escrito e
+> conferido contra o sistema real. Os poucos trechos marcados com
+> `[AJUSTAR: ...]` que restam dependem exclusivamente do autor — estão
+> listados no final, em "Próximos passos deste documento".
 
 > **Nota sobre origem do conteúdo (transparência metodológica):** este
 > documento foi redigido com apoio do Claude Code (IA). Cada tipo de conteúdo
@@ -135,7 +138,8 @@ encerramento da atividade.
 
 **Objetivo 1:** Desenvolver e publicar um site funcional (Experience Cloud)
 onde o cliente envia o texto da nota fiscal e recebe pontos calculados
-automaticamente, até `[AJUSTAR: data de entrega]`. Prazo: `[AJUSTAR]`
+automaticamente, até `[AJUSTAR: data de entrega]`. Execução real: de
+06/09/2026 a 16/09/2026 (datas comprovadas pelos commits do repositório).
 
 **Ação 1 — Definição da arquitetura e modelo de dados** (06/09/2026)
 Como fazer: levantamento das ferramentas de IA nativas disponíveis no
