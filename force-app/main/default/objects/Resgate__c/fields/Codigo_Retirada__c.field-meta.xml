@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Codigo_Retirada__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <description>Codigo alfanumerico unico que o cliente apresenta no caixa (via QR code ou digitado) para retirar o produto resgatado na loja fisica.</description>
+    <label>Codigo de Retirada</label>
+    <length>10</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

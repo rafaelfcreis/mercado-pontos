@@ -146,6 +146,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Resgate__c.Codigo_Retirada__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>ProdutoResgate__c.Categoria__c</field>
         <readable>true</readable>

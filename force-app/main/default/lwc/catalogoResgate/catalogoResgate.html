@@ -6,7 +6,7 @@
             </template>
 
             <!-- Grade de produtos -->
-            <template if:false={emCheckout}>
+            <template if:true={emGrade}>
                 <p class="slds-m-bottom_small">
                     Seu saldo atual: <strong>{saldoAtual} pontos</strong>
                 </p>
@@ -42,7 +42,7 @@
 
             <!-- Tela de checkout -->
             <template if:true={emCheckout}>
-                <div class="slds-box slds-box_small" style="max-width:480px;margin:0 auto">
+                <div class="slds-box slds-box_small" style="max-width:420px;margin:0 auto">
                     <h2 class="slds-text-heading_medium slds-m-bottom_small">Confirmar resgate</h2>
                     <template if:true={produtoSelecionado.Imagem_URL__c}>
                         <img
@@ -67,62 +67,10 @@
                         </p>
                     </template>
 
-                    <h3 class="slds-text-heading_small slds-m-bottom_x-small">Endereco de entrega</h3>
-                    <lightning-input
-                        label="Endereco (rua)"
-                        value={endereco}
-                        required
-                        onchange={handleEnderecoChange}
-                    ></lightning-input>
-                    <div class="slds-grid slds-gutters slds-m-top_x-small">
-                        <div class="slds-col slds-size_1-of-3">
-                            <lightning-input
-                                label="Numero"
-                                value={numero}
-                                onchange={handleNumeroChange}
-                            ></lightning-input>
-                        </div>
-                        <div class="slds-col slds-size_2-of-3">
-                            <lightning-input
-                                label="Complemento"
-                                value={complemento}
-                                onchange={handleComplementoChange}
-                            ></lightning-input>
-                        </div>
-                    </div>
-                    <lightning-input
-                        class="slds-m-top_x-small"
-                        label="Bairro"
-                        value={bairro}
-                        onchange={handleBairroChange}
-                    ></lightning-input>
-                    <div class="slds-grid slds-gutters slds-m-top_x-small">
-                        <div class="slds-col slds-size_2-of-3">
-                            <lightning-input
-                                label="Cidade"
-                                value={cidade}
-                                required
-                                onchange={handleCidadeChange}
-                            ></lightning-input>
-                        </div>
-                        <div class="slds-col slds-size_1-of-3">
-                            <lightning-input
-                                label="UF"
-                                value={estado}
-                                maxlength="2"
-                                required
-                                onchange={handleEstadoChange}
-                            ></lightning-input>
-                        </div>
-                    </div>
-                    <lightning-input
-                        class="slds-m-top_x-small slds-m-bottom_medium"
-                        label="CEP"
-                        placeholder="00000-000"
-                        value={cep}
-                        required
-                        onchange={handleCepChange}
-                    ></lightning-input>
+                    <p class="slds-text-body_small slds-m-bottom_medium">
+                        Ao confirmar, voce recebe um codigo (QR code) para retirar o produto no caixa de
+                        qualquer loja da rede, alem de uma copia por e-mail.
+                    </p>
 
                     <div class="slds-grid slds-gutters">
                         <div class="slds-col">
@@ -141,6 +89,28 @@
                             ></lightning-button>
                         </div>
                     </div>
+                </div>
+            </template>
+
+            <!-- Tela de confirmacao com QR code -->
+            <template if:true={emConfirmacao}>
+                <div class="slds-box slds-box_small slds-text-align_center" style="max-width:420px;margin:0 auto">
+                    <lightning-icon icon-name="utility:success" variant="success" size="medium" class="slds-m-bottom_small"></lightning-icon>
+                    <h2 class="slds-text-heading_medium slds-m-bottom_small">Resgate confirmado!</h2>
+                    <p class="slds-m-bottom_medium">
+                        Apresente o QR code abaixo (ou o codigo escrito) no caixa de qualquer loja da rede
+                        para retirar <strong>{confirmacao.produtoNome}</strong>.
+                    </p>
+                    <img src={urlQrCode} alt="QR code de retirada" class="slds-m-bottom_small" />
+                    <p class="slds-text-heading_small" style="letter-spacing:2px">{confirmacao.codigoRetirada}</p>
+                    <p class="slds-text-body_small slds-m-vertical_small">
+                        Enviamos uma copia deste codigo para o seu e-mail cadastrado.
+                    </p>
+                    <lightning-button
+                        variant="brand"
+                        label="Voltar ao Catalogo"
+                        onclick={handleFecharConfirmacao}
+                    ></lightning-button>
                 </div>
             </template>
         </div>

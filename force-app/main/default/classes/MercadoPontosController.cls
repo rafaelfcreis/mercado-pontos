@@ -37,28 +37,25 @@ public without sharing class MercadoPontosController {
         ];
     }
 
+    public class ResultadoResgate {
+        @AuraEnabled
+        public Id resgateId;
+        @AuraEnabled
+        public String codigoRetirada;
+    }
+
     @AuraEnabled
-    public static Id resgatar(
-        Id produtoId,
-        String endereco,
-        String numero,
-        String complemento,
-        String bairro,
-        String cidade,
-        String estado,
-        String cep
-    ) {
+    public static ResultadoResgate resgatar(Id produtoId) {
         try {
             Id contatoId = contatoDoUsuarioAtual();
-            ResgateService.EnderecoEntrega enderecoEntrega = new ResgateService.EnderecoEntrega();
-            enderecoEntrega.endereco = endereco;
-            enderecoEntrega.numero = numero;
-            enderecoEntrega.complemento = complemento;
-            enderecoEntrega.bairro = bairro;
-            enderecoEntrega.cidade = cidade;
-            enderecoEntrega.estado = estado;
-            enderecoEntrega.cep = cep;
-            return ResgateService.resgatarProduto(contatoId, produtoId, enderecoEntrega);
+            Id resgateId = ResgateService.resgatarProduto(contatoId, produtoId);
+
+            Resgate__c resgate = [SELECT Codigo_Retirada__c FROM Resgate__c WHERE Id = :resgateId LIMIT 1];
+
+            ResultadoResgate resultado = new ResultadoResgate();
+            resultado.resgateId = resgateId;
+            resultado.codigoRetirada = resgate.Codigo_Retirada__c;
+            return resultado;
         } catch (ResgateService.ResgateException e) {
             throw new AuraHandledException(e.getMessage());
         }
