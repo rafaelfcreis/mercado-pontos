@@ -5,12 +5,18 @@ private class MercadoPontosControllerTest {
     static void setup() {
         Profile perfilPortal = [SELECT Id FROM Profile WHERE UserLicense.Name = 'Customer Community Login' LIMIT 1];
 
+        // UserRole e User sao objetos de setup: o DML deles precisa ficar
+        // isolado em System.runAs, senao misturar com Account/Contact na mesma
+        // transacao dispara MIXED_DML_OPERATION.
+        User usuarioSetup = new User(Id = UserInfo.getUserId());
+
         // Conta de um usuario de portal precisa que o dono tenha um Role -
         // atribui um Role ao usuario que esta rodando o setup do teste.
-        UserRole role = new UserRole(Name = 'Role Teste Mercado Pontos');
-        insert role;
-        User usuarioAtual = new User(Id = UserInfo.getUserId(), UserRoleId = role.Id);
-        update usuarioAtual;
+        System.runAs(usuarioSetup) {
+            UserRole role = new UserRole(Name = 'Role Teste Mercado Pontos');
+            insert role;
+            update new User(Id = UserInfo.getUserId(), UserRoleId = role.Id);
+        }
 
         Account conta = new Account(Name = 'Conta Teste Mercado Pontos');
         insert conta;
@@ -37,7 +43,9 @@ private class MercadoPontosControllerTest {
             ProfileId = perfilPortal.Id,
             ContactId = contato.Id
         );
-        insert usuarioPortal;
+        System.runAs(usuarioSetup) {
+            insert usuarioPortal;
+        }
 
         insert new ProdutoResgate__c(Name = 'Produto Teste', Custo_Pontos__c = 20, Ativo__c = true, Estoque__c = 3);
     }
