@@ -212,10 +212,12 @@ resgate com QR code.
 
 **Objetivo 1** (site funcional publicado): avaliado objetivamente — o site
 está publicado e ao vivo (status `Live`, confirmado via consulta ao objeto
-`Network` do Salesforce), testado com um fluxo real de ponta a ponta
+`Network` do Salesforce e por acesso real à URL pública, que responde
+normalmente), testado com um fluxo real de ponta a ponta
 (cadastro → envio de nota → crédito de pontos → resgate com QR code de
-retirada), com o código versionado em git (27 commits desde 06/09/2026,
-repositório local) e a suíte de testes automatizados passando integralmente
+retirada), com o código versionado em git (repositório local, commits
+diários entre 06/09/2026 e 16/09/2026) e a suíte de testes automatizados
+passando integralmente
 (94 testes executados no org, 100% de aprovação; cobertura global do org em
 87%).
 
@@ -428,7 +430,7 @@ original precisou mudar. Documenta o objeto de estudo da disciplina — o uso
 de IA no desenvolvimento — pelo próprio ato de tê-lo usado.
 
 **3. Repositório git do projeto** — repositório **local**, não publicado em
-servidor remoto. Reúne 29 commits entre 06/09/2026 e 16/09/2026, com
+servidor remoto. Reúne cerca de 30 commits entre 06/09/2026 e 16/09/2026, com
 mensagens descritivas que registram cada etapa e cada problema real
 encontrado (por exemplo, os commits que documentam o pivot do Prompt
 Builder para o Agentforce e a correção dos templates de e-mail). Serve como
