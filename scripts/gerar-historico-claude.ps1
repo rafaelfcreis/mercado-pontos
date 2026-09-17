@@ -9,9 +9,13 @@
     antes da entrega final.
 #>
 param(
-    # Localiza a pasta de transcripts sem depender de um caminho fixo.
-    [string]$ProjectDir = (Get-ChildItem (Join-Path $env:USERPROFILE ".claude\projects") -Directory -ErrorAction SilentlyContinue |
-        Where-Object { $_.Name -like "*Trabalho-2" } | Select-Object -First 1).FullName,
+    # Localiza as pastas de transcripts sem depender de um caminho fixo. O
+    # Claude Code separa as sessoes por caminho do projeto, e este projeto ja
+    # mudou de pasta uma vez - entao existe mais de uma pasta de transcripts, e
+    # todas precisam entrar. Pegar so a primeira descartaria o historico
+    # anterior a mudanca, que e a maior parte do trabalho.
+    [string[]]$ProjectDirs = @(Get-ChildItem (Join-Path $env:USERPROFILE ".claude\projects") -Directory -ErrorAction SilentlyContinue |
+        Where-Object { $_.Name -like "*Trabalho-2" } | Select-Object -ExpandProperty FullName),
     [string]$OutPath = "docs\historico-conversa-claude-code.md"
 )
 
@@ -27,6 +31,15 @@ param(
 #>
 $RaizProjeto = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $PastaSincronizada = ($RaizProjeto -split '\\' | Where-Object { $_ -like "* - *" } | Select-Object -First 1)
+if (-not $PastaSincronizada) {
+    <#
+        O projeto saiu da pasta sincronizada, mas os transcripts antigos citam
+        o caminho antigo em cada comando - a ocultacao continua necessaria.
+        A pasta em si continua no perfil do usuario, entao o nome vem de la.
+    #>
+    $PastaSincronizada = Get-ChildItem $env:USERPROFILE -Directory -ErrorAction SilentlyContinue |
+        Where-Object { $_.Name -like "OneDrive - *" } | Select-Object -First 1 -ExpandProperty Name
+}
 $NomeOculto = if ($PastaSincronizada) { ($PastaSincronizada -split ' - ', 2)[1] } else { $null }
 
 function Sanitizar($texto) {
@@ -35,7 +48,7 @@ function Sanitizar($texto) {
     # Caminho completo do projeto, nas formas Windows e Git Bash.
     $texto = $texto.Replace($RaizProjeto, '<PROJETO>')
     $texto = $texto.Replace(($RaizProjeto -replace '\\', '/'), '<PROJETO>')
-    if ($ProjectDir) { $texto = $texto.Replace($ProjectDir, '<TRANSCRIPTS>') }
+    foreach ($dir in $ProjectDirs) { $texto = $texto.Replace($dir, '<TRANSCRIPTS>') }
 
     foreach ($v in $script:VariantesNome) {
         $texto = $texto -replace ('(?i)\b' + [regex]::Escape($v)), '<EMPRESA>'
@@ -57,6 +70,32 @@ if ($NomeOculto) {
             $script:VariantesNome += $base.Substring(0, $i).TrimEnd(' ', '-')
         }
     }
+
+    <#
+        Um comando pode tambem citar o nome comecando no meio dele - por
+        exemplo uma busca pelas palavras do meio - e ai nenhum prefixo do nome
+        inteiro pega. Entao cada palavra do nome vira um novo ponto de partida.
+        (De novo sem exemplo literal aqui, pelo mesmo motivo do bloco acima.)
+
+        Para nao mutilar palavras comuns que por acaso facam parte do nome, um
+        trecho so entra se comecar numa palavra de pelo menos 4 letras e for
+        longo o bastante para alcancar a palavra seguinte - ou seja, nunca uma
+        palavra isolada.
+    #>
+    $MinimoAlemDaPalavra = 3  # espaco + 2 letras da palavra seguinte
+    $palavras = $NomeOculto -split '\s+'
+    for ($p = 1; $p -lt $palavras.Count; $p++) {
+        if ($palavras[$p].Length -lt 4) { continue }
+        $resto = ($palavras[$p..($palavras.Count - 1)]) -join ' '
+        $minimo = $palavras[$p].Length + $MinimoAlemDaPalavra
+        for ($i = $resto.Length; $i -ge $minimo; $i--) {
+            $trecho = $resto.Substring(0, $i).TrimEnd(' ', '-')
+            if ($trecho.Length -lt $minimo) { continue }
+            $script:VariantesNome += $trecho
+            $script:VariantesNome += ($trecho -replace '\s+', '-')
+        }
+    }
+
     $script:VariantesNome = $script:VariantesNome | Select-Object -Unique | Sort-Object { $_.Length } -Descending
 }
 
@@ -138,7 +177,11 @@ function Processar-Arquivo($caminho, $saida) {
     }
 }
 
-$arquivos = Get-ChildItem -Path $ProjectDir -Filter "*.jsonl" | Sort-Object LastWriteTime
+if (-not $ProjectDirs) {
+    throw "Nenhuma pasta de transcripts encontrada em $env:USERPROFILE\.claude\projects (esperado algo terminando em 'Trabalho-2')."
+}
+
+$arquivos = Get-ChildItem -Path $ProjectDirs -Filter "*.jsonl" | Sort-Object LastWriteTime
 $saida = New-Object System.Collections.Generic.List[string]
 
 $saida.Add("# Historico da conversa com Claude Code - Trabalho Mercado Pontos")
