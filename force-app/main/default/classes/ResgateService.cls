@@ -34,6 +34,16 @@ public without sharing class ResgateService {
         );
         insert resgate;
 
+        // Name e auto-numero: o Apex nao devolve o valor gerado no sObject em
+        // memoria depois do insert, entao precisa reconsultar - senao o numero
+        // do resgate sai como null no e-mail de confirmacao.
+        resgate = [
+            SELECT Id, Name, Codigo_Retirada__c, Documento__c, Pontos_Utilizados__c
+            FROM Resgate__c
+            WHERE Id = :resgate.Id
+            LIMIT 1
+        ];
+
         Decimal saldoAposResgate = saldoAtual - produto.Custo_Pontos__c;
         cliente.Saldo_Pontos__c = saldoAposResgate;
         update cliente;
@@ -128,6 +138,17 @@ public without sharing class ResgateService {
 
             Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
             email.setToAddresses(new List<String>{ cliente.Email });
+
+            // Sem remetente explicito, o Salesforce usa o e-mail do usuario logado -
+            // num site de comunidade isso faz a mensagem sair com From igual ao To,
+            // que o Gmail trata como spam. Usa um endereco verificado do org quando
+            // houver algum disponivel.
+            List<OrgWideEmailAddress> remetente = [
+                SELECT Id FROM OrgWideEmailAddress WHERE IsAllowAllProfiles = true LIMIT 1
+            ];
+            if (!remetente.isEmpty()) {
+                email.setOrgWideEmailAddressId(remetente[0].Id);
+            }
             email.setSubject('Resgate ' + resgate.Name + ' confirmado - Mercado Pontos');
             email.setPlainTextBody(
                 'Ola' + (String.isBlank(cliente.Name) ? '' : ', ' + cliente.Name) + '!\n\n' +
@@ -162,7 +183,11 @@ public without sharing class ResgateService {
             );
             Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ email });
         } catch (Exception e) {
-            // Falha no envio do e-mail nao deve desfazer um resgate ja confirmado.
+            // Falha no envio do e-mail nao deve desfazer um resgate ja confirmado,
+            // mas precisa deixar rastro: engolir a excecao em silencio ja escondeu
+            // um problema de envio antes.
+            System.debug(LoggingLevel.ERROR, 'Falha ao enviar e-mail do resgate ' +
+                resgate.Id + ': ' + e.getTypeName() + ' - ' + e.getMessage());
         }
     }
 }
