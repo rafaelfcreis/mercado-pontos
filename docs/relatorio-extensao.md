@@ -215,11 +215,11 @@ está publicado e ao vivo (status `Live`, confirmado via consulta ao objeto
 `Network` do Salesforce e por acesso real à URL pública, que responde
 normalmente), testado com um fluxo real de ponta a ponta
 (cadastro → envio de nota → crédito de pontos → resgate com QR code de
-retirada), com o código versionado em git (repositório local, commits
-diários entre 06/09/2026 e 16/09/2026) e a suíte de testes automatizados
-passando integralmente
-(94 testes executados no org, 100% de aprovação; cobertura global do org em
-87%).
+retirada), com o código versionado em git (repositório público em
+https://github.com/rafaelfcreis/mercado-pontos, commits diários entre
+06/09/2026 e 16/09/2026) e a suíte de testes automatizados passando
+integralmente (94 testes executados no org, 100% de aprovação; cobertura
+global do org em 88%).
 
 **Objetivo 2** (conhecimento prático de IA generativa): avaliado pelas
 decisões de arquitetura de IA efetivamente tomadas e documentadas ao longo
@@ -463,7 +463,7 @@ de IA no desenvolvimento — pelo próprio ato de tê-lo usado.
 
 **3. Repositório git do projeto** — **https://github.com/rafaelfcreis/mercado-pontos**
 (público, acessível sem necessidade de conta).
-Reúne cerca de 30 commits entre 06/09/2026 e 16/09/2026, com
+Reúne 39 commits entre 06/09/2026 e 16/09/2026, com
 mensagens descritivas que registram cada etapa e cada problema real
 encontrado (por exemplo, os commits que documentam o pivot do Prompt
 Builder para o Agentforce e a correção dos templates de e-mail). Serve como
@@ -471,7 +471,7 @@ linha do tempo objetiva do trabalho — as datas do cronograma da Parte II
 vêm dele.
 
 **4. Suíte de testes automatizados** — execução real em 16/09/2026: 94
-testes no org, 100% de aprovação, cobertura global de 87%. Das classes
+testes no org, 100% de aprovação, cobertura global de 88%. Das classes
 deste projeto: `NotaFiscalProcessingService` 98%,
 `RegistrarNotaFiscalAction` 97%, `ResgateService` 96%,
 `MercadoPontosController` 91%, `ProcessarNotaFiscalQueueable` 89%.

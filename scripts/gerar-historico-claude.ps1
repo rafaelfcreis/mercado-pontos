@@ -82,7 +82,7 @@ if ($NomeOculto) {
         longo o bastante para alcancar a palavra seguinte - ou seja, nunca uma
         palavra isolada.
     #>
-    $MinimoAlemDaPalavra = 3  # espaco + 2 letras da palavra seguinte
+    $MinimoAlemDaPalavra = 2  # espaco + 1 letra da palavra seguinte
     $palavras = $NomeOculto -split '\s+'
     for ($p = 1; $p -lt $palavras.Count; $p++) {
         if ($palavras[$p].Length -lt 4) { continue }

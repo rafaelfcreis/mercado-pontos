@@ -3325,8 +3325,8 @@ pode fazer
 - `Edit`: <PROJETO>\scripts\gerar-historico-claude.ps1
 - `Edit`: <PROJETO>\scripts\gerar-historico-claude.ps1
 - `Edit`: <PROJETO>\scripts\gerar-historico-claude.ps1
-- `PowerShell`: .\scripts\gerar-historico-claude.ps1 $c = Get-Content "docs\historico-conversa-claude-code.md" -Raw $termos = 'ATACADO','BRASILEIRO D','CONSTR L','<EMPRESA>','<EMPRESA>','<EMPRESA>' foreach ($t in $termos) { Wri...
-- `Bash`: cd "/c/Dev/Trabalho 2" && grep -n -i "atacado\|brasileiro d\|constr l" docs/historico-conversa-claude-code.md | cut -c1-260
+- `PowerShell`: .\scripts\gerar-historico-claude.ps1 $c = Get-Content "docs\historico-conversa-claude-code.md" -Raw $termos = 'ATACADO','<EMPRESA>','<EMPRESA>','<EMPRESA>','<EMPRESA>','<EMPRESA>' foreach ($t in $termos) { Wri...
+- `Bash`: cd "/c/Dev/Trabalho 2" && grep -n -i "atacado\|<EMPRESA>\|<EMPRESA>" docs/historico-conversa-claude-code.md | cut -c1-260
 - `Bash`: cat "/c/Users/RafaelCunha/.claude/projects/c--Dev-Trabalho-2/memory/feedback-git-documentacao-trabalhos.md"; echo "=== status ==="; cd "/c/Dev/Trabalho 2" && git status --short
 - `Bash`: cd "/c/Dev/Trabalho 2" && sed -n '50,95p' scripts/gerar-historico-claude.ps1
 - `Bash`: cd "/c/Dev/Trabalho 2" && git diff force-app/main/default/lwc/jsconfig.json
@@ -3396,3 +3396,80 @@ agora verifique tudo e descubra quais passos ainda faltam para terminar
 
 - `Edit`: <PROJETO>\scripts\gerar-historico-claude.ps1
 - `Bash`: cd "/c/Dev/Trabalho 2" && .\/scripts/../scripts/gerar-historico-claude.ps1 >/dev/null 2>&1; powershell -ExecutionPolicy Bypass -File "scripts\gerar-historico-claude.ps1"
+- `Bash`: cd "/c/Dev/Trabalho 2" && git add docs/historico-conversa-claude-code.md scripts/gerar-historico-claude.ps1 && git commit -q --amend -m "$(cat <<'EOF' Corrige o gerador de historico apos a mudanca de pasta do projeto  O ...
+- `Bash`: cd "/c/Dev/Trabalho 2" && echo "=== quais refs contem os commits com o nome ===" && for c in 18b3418 2427597; do echo -n "$c -> "; git for-each-ref --contains $c --format='%(refname:short)' 2>/dev/null | tr '\n' ' '; ech...
+**Claude:** Verifiquei tudo. Estado real:
+
+## O que está pronto e conferido agora
+
+| Item | Estado |
+|---|---|
+| Testes Apex | **94/94 passando**, cobertura do org **88%** |
+| Metadata local vs org | 59 componentes, **0 erros** (validação sem deploy) |
+| Site publicado | **Live**, HTTP 200 |
+| Agente Agentforce | `Mercado Pontos Assistente` **v1 Active** |
+| Catálogo | 8 produtos ativos |
+| Repositório público | `github.com/rafaelfcreis/mercado-pontos`, 39 commits (06/09 → 16/09) |
+| Estrutura do relatório | bate com o roteiro (I, II, III + Contextualização/Metodologia/Resultados) |
+| Nome do empregador no GitHub | **limpo** — a história antiga só existe em refs locais |
+
+## Erro meu, já corrigido
+
+No commit anterior eu escrevi um trecho literal do nome da empresa dentro do comentário do script e da mensagem do commit — exatamente o que o comentário original do arquivo avisava para não fazer. Como o commit ainda não tinha sido enviado, refiz ele sem o trecho e regenerei o histórico. Verificado: zero ocorrências no script e no documento.
+
+## O que ainda falta
+
+**Só você pode fazer** — são os 5 que o próprio relatório já lista:
+
+1. **Dados pessoais** — faixa etária, escolaridade, perfil socioeconômico e cidade/estado ([relatorio-extensao.md:48-49](docs/relatorio-extensao.md#L48-L49))
+2. **Data de entrega** — em dois pontos ([:119](docs/relatorio-extensao.md#L119) e [:141](docs/relatorio-extensao.md#L141))
+3. **Revisar a voz da Parte III** — os dois blocos em primeira pessoa ([:239](docs/relatorio-extensao.md#L239) e [:419](docs/relatorio-extensao.md#L419)). Os fatos estão certos; o que muda é o jeito de contar.
+4. **Prints** — 3 de ~9 feitos. Faltam: Object Manager com os 4 objetos, classes Apex com a tela de cobertura, lista de LWCs, **Agent Builder com uma conversa interpretando uma nota** (a mais importante para a disciplina) e a tela de confirmação com o QR code.
+
+**Posso resolver sem você:**
+
+5. **Dois números desatualizados no relatório** — ele diz "cerca de 30 commits" (são 39) e "cobertura 87%" (medi 88% agora).
+6. **Publicar o commit** — `sf-dev` está 1 commit à frente do GitHub, e `main` 1 atrás de `sf-dev`.
+7. **`jsconfig.json`** aparece modificado, mas é só fim de linha (CRLF). Dá para descartar ou ignorar.
+
+**Duas decisões suas:**
+
+8. **O título da aba do site é "Welcome to LWC Communities!"** — o padrão do template LWR, nunca trocado. Aparece em todo print do site que você tirar. Está no Head Markup do site; dá para corrigir via metadata, mas mexe no site publicado.
+9. **Refs de backup locais** (`backup-pre-limpeza-20260916-2227` e a tag `backup-antes-limpeza-historico`) ainda contêm a história antiga **com o nome da empresa**. Hoje são locais, então o GitHub está limpo — mas um `git push --tags` ou `git push --all` publicaria tudo de uma vez. Recomendo apagar as duas assim que você estiver seguro de que não precisa mais desse ponto de retorno.
+
+Quer que eu resolva os itens 5, 6 e 7, e ataque o 8 e o 9?
+
+## Usuario
+
+pode resolver tudo.
+
+**Claude:** Vou resolver na ordem: relatório, título do site, limpeza do git, e por fim publicar.
+
+- `Bash`: cd "/c/Dev/Trabalho 2" && grep -n "cerca de 30 commits\|87%\|94 testes" docs/relatorio-extensao.md
+- `Bash`: cd "/c/Dev/Trabalho 2" && sed -n '218,224p' docs/relatorio-extensao.md && echo "---" && sed -n '464,468p' docs/relatorio-extensao.md && echo "---" && sed -n '472,476p' docs/relatorio-extensao.md
+- `Edit`: <PROJETO>\docs\relatorio-extensao.md
+- `Edit`: <PROJETO>\docs\relatorio-extensao.md
+- `Edit`: <PROJETO>\docs\relatorio-extensao.md
+**Claude:** Agora o título do site. Vou recuperar só a página que contém o Head Markup, em vez do site inteiro:
+
+- `PowerShell`: Remove-Item -Recurse -Force tmp_head -ErrorAction SilentlyContinue sf project retrieve start --target-org doacao-org --metadata "DigitalExperience:site/Mercado_Pontos1.sfdc_cms__appPage/mainAppPage" --output-dir tmp_head...
+- `PowerShell`: $f = "tmp_head\digitalExperiences\site\Mercado_Pontos1\sfdc_cms__appPage\mainAppPage\content.json" $c = Get-Content $f -Raw -Encoding UTF8 $antigo = '<title>Welcome to LWC Communities!</title>' $novo = '<title>Mercado Po...
+- `PowerShell`: sf project deploy start --target-org doacao-org --source-dir tmp_head --json 2>$null | Out-File -Encoding utf8 "$env:TEMP\dep.json" $d = Get-Content "$env:TEMP\dep.json" -Raw | ConvertFrom-Json Write-Output "status: $($d...
+**Claude:** Esse é o bug conhecido de exibição da CLI. Vou confirmar o resultado real:
+
+- `PowerShell`: sf project deploy report --target-org doacao-org --json 2>$null | Out-File -Encoding utf8 "$env:TEMP\rep.json" $r = Get-Content "$env:TEMP\rep.json" -Raw | ConvertFrom-Json Write-Output "status geral: $($r.status)" Write...
+- `PowerShell`: Remove-Item -Recurse -Force tmp_check -ErrorAction SilentlyContinue sf project retrieve start --target-org doacao-org --metadata "DigitalExperience:site/Mercado_Pontos1.sfdc_cms__appPage/mainAppPage" --output-dir tmp_che...
+- `PowerShell`: sf community publish --name "Mercado Pontos" --target-org doacao-org --json 2>$null | Out-File -Encoding utf8 "$env:TEMP\pub.json" $p = Get-Content "$env:TEMP\pub.json" -Raw | ConvertFrom-Json Write-Output "status: $($p....
+**Claude:** Publicação disparada. Enquanto ela roda, vou limpar o git:
+
+- `Bash`: cd "/c/Dev/Trabalho 2" && git checkout -- force-app/main/default/lwc/jsconfig.json && echo "jsconfig restaurado" && echo "=== refs de backup antes ===" && git for-each-ref --format='%(refname)' | grep -i "backup\|origina...
+- `Bash`: cd "/c/Dev/Trabalho 2" && git branch -D backup-pre-limpeza-20260916-2227 && git tag -d backup-antes-limpeza-historico && git for-each-ref --format='%(refname)' refs/original | while read r; do git update-ref -d "$r" && e...
+**Claude:** O classificador bloqueou a remoção das refs — vou deixar essa para você e seguir com o resto.
+
+- `Bash`: cd "/c/Dev/Trabalho 2" && powershell -ExecutionPolicy Bypass -File "scripts\gerar-historico-claude.ps1" && rm -rf tmp_head tmp_check && echo "temporarios removidos" && git status --short
+- `PowerShell`: $c = Get-Content "docs\historico-conversa-claude-code.md" -Raw $termos = '<EMPRESA>','<EMPRESA>','<EMPRESA>','<EMPRESA>','<EMPRESA>','OneDrive - [A-Z]' foreach ($t in $termos) { Write-Output "$t -> $((([regex]::...
+- `Bash`: cd "/c/Dev/Trabalho 2" && grep -n -i "<EMPRESA>\|<EMPRESA>" docs/historico-conversa-claude-code.md | cut -c1-230
+**Claude:** Ainda dá para reconstruir o nome juntando os fragmentos numa mesma linha. Vou fechar isso:
+
+- `Edit`: <PROJETO>\scripts\gerar-historico-claude.ps1
+- `Bash`: cd "/c/Dev/Trabalho 2" && powershell -ExecutionPolicy Bypass -File "scripts\gerar-historico-claude.ps1"
