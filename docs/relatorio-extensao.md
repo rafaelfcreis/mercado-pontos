@@ -488,11 +488,16 @@ sistema publicado em uso real pelo autor. Já capturados:
   pontos acumulado.
 - `03-catalogo-de-resgate-com-imagens.png` — catálogo de resgate mostrando
   produtos, custo em pontos e saldo disponível.
+- `04-confirmacao-de-resgate-com-qr-code.png` — tela de confirmação após um
+  resgate real feito pelo autor no site publicado: o QR code de retirada, o
+  código escrito equivalente (`L52NCU8Y`) e o saldo já debitado (de 149 para
+  129 pontos, referentes ao produto de 20 pontos). É a evidência de que o
+  fluxo completo — envio da nota, acúmulo de pontos e troca — funciona ponta
+  a ponta em uso real, e não apenas nos testes automatizados.
 
-Faltam os prints da parte interna (modelo de dados, classes Apex com a
-cobertura de testes, componentes LWC e o Agent Builder do Agentforce) e o da
-tela de confirmação do resgate com o QR code — lista detalhada na seção
-"Próximos passos deste documento".
+Faltam os prints da parte interna: modelo de dados, classes Apex com a
+cobertura de testes, componentes LWC e o Agent Builder do Agentforce —
+lista detalhada na seção "Próximos passos deste documento".
 
 ---
 
@@ -526,11 +531,12 @@ cobrindo cada parte do que foi construído:
   `Mercado_Pontos_Assistente`, e uma conversa de teste em que ele
   interpreta o texto de uma nota fiscal — esta é a evidência visual mais
   importante para a disciplina.
-- *Sistema em uso*: Home do site, tela de cadastro, envio de uma nota,
-  extrato de pontos, catálogo, checkout do resgate, tela de confirmação com
-  o QR code. (Não incluir print de e-mail de confirmação recebido: a
-  entrega desse e-mail não foi obtida — ver item 12 de Resultados e
-  Discussão.)
+- *Sistema em uso*: já capturados a tela de login, a Home com o formulário
+  de envio, o catálogo e a confirmação do resgate com o QR code (itens 01 a
+  04 das Evidências). Ainda faltam a tela de cadastro, o envio de uma nota
+  sendo preenchido e o extrato de pontos. (Não incluir print de e-mail de
+  confirmação recebido: a entrega desse e-mail não foi obtida — ver item 12
+  de Resultados e Discussão.)
 
 *(O repositório já foi publicado em
 https://github.com/rafaelfcreis/mercado-pontos e o link consta na seção de
