@@ -383,6 +383,32 @@ bugs de plataforma genuínos, não erros de configuração:
     português — corrigido usuário por usuário conforme aparecem, já que
     mudar o padrão do org afetaria os dois projetos.
 
+12. **E-mail de confirmação do resgate: enviado pela aplicação, mas não
+    entregue ao destinatário**. O resgate grava o pedido, debita os pontos,
+    gera o código de retirada e dispara um e-mail de confirmação. A
+    aplicação cumpre sua parte: uma execução de diagnóstico em Apex mostrou
+    que `Messaging.sendEmail` retorna sucesso, sem exceção, e o contato não
+    registra nenhum *bounce*. Ainda assim, a mensagem nunca chegou à caixa
+    de entrada. A investigação revelou duas causas distintas, ambas
+    corrigidas no código: (a) o campo `Name` do objeto `Resgate__c` é
+    auto-numérico, e o Apex **não preenche campos auto-numéricos no objeto
+    em memória depois do `insert`** — o e-mail saía com "Resgate null
+    confirmado" no assunto; (b) sem remetente explícito, a plataforma usa o
+    e-mail do **usuário logado** como remetente, o que, num site de
+    comunidade, faz a mensagem sair do endereço do próprio cliente para ele
+    mesmo — um padrão que provedores como o Gmail tratam como tentativa de
+    falsificação. Mesmo após as correções, a entrega não foi obtida, o que
+    é coerente com a limitação de fundo: o org é um **Developer Edition**,
+    sem domínio próprio autenticado (SPF/DKIM) para assinar as mensagens, e
+    com teto de apenas **15 e-mails por dia** via Apex. Conclusão honesta:
+    o envio é responsabilidade da aplicação e está correto; a **entrega**
+    depende de infraestrutura de reputação de domínio que este ambiente não
+    tem. Registra-se como limitação real, não como funcionalidade entregue.
+    Um efeito colateral revelador é que o tratamento de erro do envio
+    descartava a exceção silenciosamente — foi justamente esse silêncio que
+    escondeu o problema por vários dias, um lembrete prático de que engolir
+    exceção sem deixar rastro transforma uma falha visível em um mistério.
+
 Essas descobertas mostram na prática algo central pra disciplina: **usar
 IA generativa em produção não é só "chamar uma API"** — envolve lidar com
 imaturidade de plataforma, debugar com evidência real (queries, logs de
@@ -490,7 +516,9 @@ cobrindo cada parte do que foi construído:
   importante para a disciplina.
 - *Sistema em uso*: Home do site, tela de cadastro, envio de uma nota,
   extrato de pontos, catálogo, checkout do resgate, tela de confirmação com
-  o QR code, e o e-mail de confirmação recebido na caixa de entrada.
+  o QR code. (Não incluir print de e-mail de confirmação recebido: a
+  entrega desse e-mail não foi obtida — ver item 12 de Resultados e
+  Discussão.)
 
 **5. Decidir se o repositório git será publicado** (GitHub, por exemplo).
 Hoje ele é local, e o relatório está escrito dessa forma na seção de
