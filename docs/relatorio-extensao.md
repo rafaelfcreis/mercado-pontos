@@ -478,9 +478,20 @@ Evidencia que a lógica de negócio (cálculo de pontos, bloqueio de nota
 duplicada, validação de CPF, controle de saldo e estoque) está de fato
 verificada, e não apenas "funcionando na tela".
 
-**5. Registros visuais do sistema** (prints a anexar — ver lista na seção
-"Próximos passos deste documento"): demonstram o modelo de dados, o código,
-a configuração da IA e o sistema em uso real pelo autor.
+**5. Registros visuais do sistema** — pasta `docs/evidencias/`. Demonstram o
+sistema publicado em uso real pelo autor. Já capturados:
+- `01-site-tela-de-login.png` — tela de login do site, com o cadastro
+  próprio de clientes.
+- `02-home-enviar-nota-fiscal-com-saldo.png` — página inicial com o
+  formulário de envio da nota fiscal e o cabeçalho exibindo o saldo de
+  pontos acumulado.
+- `03-catalogo-de-resgate-com-imagens.png` — catálogo de resgate mostrando
+  produtos, custo em pontos e saldo disponível.
+
+Faltam os prints da parte interna (modelo de dados, classes Apex com a
+cobertura de testes, componentes LWC e o Agent Builder do Agentforce) e o da
+tela de confirmação do resgate com o QR code — lista detalhada na seção
+"Próximos passos deste documento".
 
 ---
 
