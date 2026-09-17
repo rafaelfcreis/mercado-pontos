@@ -461,8 +461,9 @@ arquitetura sendo tomadas, os bugs sendo investigados com evidência real
 original precisou mudar. Documenta o objeto de estudo da disciplina — o uso
 de IA no desenvolvimento — pelo próprio ato de tê-lo usado.
 
-**3. Repositório git do projeto** — repositório **local**, não publicado em
-servidor remoto. Reúne cerca de 30 commits entre 06/09/2026 e 16/09/2026, com
+**3. Repositório git do projeto** — **https://github.com/rafaelfcreis/mercado-pontos**
+(público, acessível sem necessidade de conta).
+Reúne cerca de 30 commits entre 06/09/2026 e 16/09/2026, com
 mensagens descritivas que registram cada etapa e cada problema real
 encontrado (por exemplo, os commits que documentam o pivot do Prompt
 Builder para o Agentforce e a correção dos templates de e-mail). Serve como
@@ -531,9 +532,9 @@ cobrindo cada parte do que foi construído:
   entrega desse e-mail não foi obtida — ver item 12 de Resultados e
   Discussão.)
 
-**5. Decidir se o repositório git será publicado** (GitHub, por exemplo).
-Hoje ele é local, e o relatório está escrito dessa forma na seção de
-Evidências. Se optar por publicar, basta trocar aquela frase pelo link.
+*(O repositório já foi publicado em
+https://github.com/rafaelfcreis/mercado-pontos e o link consta na seção de
+Evidências — nada a fazer aqui.)*
 
 ## Fontes
 
