@@ -34,7 +34,7 @@ Perfil do autor/participante:
   trabalho com a graduação a distância. Como consumidor, faz compras de
   supermercado com regularidade — o que o coloca diretamente no público da
   solução desenvolvida.
-- **Localização:** [cidade/estado]
+- **Localização:** Uberlândia/MG
 
 ### 2. Situação-problema identificada
 

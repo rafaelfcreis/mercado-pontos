@@ -3792,3 +3792,42 @@ escreva por mim, depois reviso.
 **Claude:** Só sobrou a cidade/estado. Vou salvar tudo:
 
 - `Bash`: cd "/c/Dev/Trabalho 2" && git checkout -- force-app/main/default/lwc/jsconfig.json 2>/dev/null; powershell -ExecutionPolicy Bypass -File "scripts\gerar-historico-claude.ps1" && powershell -Command "\$c = Get-Content 'doc...
+- `Bash`: cat >> "/c/Users/RafaelCunha/.claude/projects/c--Dev-Trabalho-2/memory/ia-para-devs-mercado-pontos.md" << 'EOF'  ## Entrega (2026-09-17)  Relatório fechado (commit `e55f1d4`): dados do autor preenchidos (32 anos, superio...
+**Claude:** O relatório está pronto para você revisar: [docs/relatorio-extensao.md](docs/relatorio-extensao.md). Falta só a cidade/estado.
+
+## O que escrevi
+
+**Seus dados:** 32 anos, ensino superior incompleto (graduação a distância em andamento), e a data de entrega de hoje, 17/09/2026, nos dois lugares.
+
+**Perfil socioeconômico:** usei só o que sei de verdade — você trabalha com desenvolvimento de sistemas e concilia o trabalho com a faculdade a distância. Ficou assim: *"adulto economicamente ativo, empregado na área de tecnologia, com atuação em desenvolvimento de sistemas, que concilia o trabalho com a graduação a distância"*. Não coloquei faixa de renda porque não sei a sua. Se quiser incluir, é só acrescentar nessa linha.
+
+**Metodologia (Parte III):** estava com um parágrafo só, e o roteiro pede os métodos usados e os detalhes de implementação. Reescrevi em quatro partes: como foi feito o diagnóstico, o trabalho em par com a IA, o que foi construído e como foi validado.
+
+**Removi todas as notas internas:** o aviso de status no topo, os avisos de rascunho na Parte III e a seção "Próximos passos". A nota explicando que o texto foi escrito com apoio de IA ficou, resumida — numa disciplina de IA para Devs isso conta a favor.
+
+**Corrigi três coisas que tinham ficado falsas no texto:**
+- Dizia que a IA calcula os pontos. Não calcula: são 1 ponto por real, pelo formulário.
+- Citava o Prompt Builder como a IA da solução, mas ele foi substituído pelo Agentforce.
+- Citava o formulário de endereço de entrega, que foi trocado pela retirada na loja com QR code.
+
+**Fontes:** confirmei que quatro das cinco continuam no ar. O link do blog da Salesforce bloqueia acesso automático, então vale abrir uma vez no navegador para garantir.
+
+## O que falta
+
+1. **Sua cidade/estado.** Está marcado como `[cidade/estado]` na Parte I, seção 1.
+2. **O push para o GitHub.** São 2 commits esperando, e o login da conta pessoal só pode ser feito por você:
+   ```bash
+   git push origin sf-dev
+   git checkout main && git merge sf-dev --ff-only && git push origin main && git checkout sf-dev
+   ```
+   Quando o navegador abrir, entre como **rafaelfcreis**, não com a conta do trabalho.
+
+Depois que você revisar, me diga como vai entregar: **colando cada seção na plataforma, ou enviando um documento Word/PDF**. Eu preparo a versão final no formato certo.
+
+## Usuario
+
+uberlandia mg
+eu já fiz login no git pessoal, confere pra mim. o nome é rafaelfcreis
+
+- `Bash`: cd "/c/Dev/Trabalho 2" && sed -i 's|^- \*\*Localização:\*\* \[cidade/estado\]|- **Localização:** Uberlândia/MG|' docs/relatorio-extensao.md && grep -n "Localização" docs/relatorio-extensao.md && echo "=== conta configura...
+- `Bash`: cd "/c/Dev/Trabalho 2" && git checkout -- force-app/main/default/lwc/jsconfig.json 2>/dev/null; powershell -ExecutionPolicy Bypass -File "scripts\gerar-historico-claude.ps1" && powershell -Command "\$c = Get-Content 'doc...
