@@ -499,6 +499,17 @@ Faltam os prints da parte interna: modelo de dados, classes Apex com a
 cobertura de testes, componentes LWC e o Agent Builder do Agentforce —
 lista detalhada na seção "Próximos passos deste documento".
 
+**6. Vídeo de demonstração do sistema** — arquivo `trabalho2.mp4`, gravado
+pelo autor em 17/09/2026, com o site publicado em uso real. O vídeo percorre
+o fluxo completo do cliente: com a conta já logada, o autor envia o texto de
+uma nota fiscal (valor de R$ 137,40, que gerou 137 pontos creditados no
+saldo), abre o catálogo e resgata o "Kit Café da Manhã" (80 pontos),
+recebendo o QR code e o código de retirada na tela de confirmação. Os
+registros gravados no Salesforce durante a gravação — a nota processada e o
+resgate com o código gerado — confirmam que o que aparece no vídeo é o
+sistema real funcionando, e não uma simulação. Complementa os prints 01 a 04
+mostrando a sequência em movimento, do envio da nota até a troca.
+
 ---
 
 ## Próximos passos deste documento

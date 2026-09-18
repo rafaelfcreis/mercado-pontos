@@ -3573,3 +3573,141 @@ adicionei um print de uma troca, não tinha certo?
 - `Bash`: cd "/c/Dev/Trabalho 2" && grep -n "Sistema em uso" -A 6 docs/relatorio-extensao.md
 - `Edit`: <PROJETO>\docs\relatorio-extensao.md
 - `Bash`: cd "/c/Dev/Trabalho 2" && powershell -ExecutionPolicy Bypass -File "scripts\gerar-historico-claude.ps1" && git add -A && git commit -q -m "$(cat <<'EOF' Adiciona o print da confirmacao de resgate com QR code  Evidencia d...
+**Claude:** Certo, não tínhamos — e era justamente uma das que faltavam.
+
+Adicionei como **`04-confirmacao-de-resgate-com-qr-code.png`**, descrevi na seção de Evidências e ajustei a lista de pendências do relatório. Commitado e publicado no GitHub (`73b6624`).
+
+É um print forte: mostra o resgate confirmado, o QR code, o código `L52NCU8Y` e o saldo já debitado de 149 para 129 pontos — ou seja, o débito bateu com os 20 pontos do Óleo de Soja. É a primeira evidência do fluxo funcionando ponta a ponta em uso real, e não só nos testes.
+
+## Duas coisas que o print mostrou
+
+**A tela promete um e-mail que não chega.** O texto diz "Enviamos uma copia deste codigo para o seu e-mail cadastrado" — mas a entrega desse e-mail é exatamente a limitação que vocês documentaram como item 12 de Resultados e Discussão. O relatório é honesto sobre isso, e a tela afirma o contrário. Como o print vai anexado, alguém lendo os dois nota a contradição. Daria para trocar por algo como "Também enviamos este código para o seu e-mail cadastrado, quando a entrega é possível" — ou simplesmente remover a frase.
+
+**Acentos faltando**, visíveis no print: "Catalogo de Resgate", "o codigo escrito", "Voltar ao Catalogo" e "Oleo de Soja 900ml" (esse último é o nome do produto no banco, não no código).
+
+## Um pedido bloqueado
+
+Tentei apagar a captura original em `Imagens/Capturas de tela/` como você pediu que eu sempre fizesse, mas o classificador bloqueou a exclusão — igual às refs de backup. O arquivo é o `Sem título23.png`, se quiser apagar.
+
+## Faltam agora
+
+Object Manager com os 4 objetos, classes Apex com a cobertura, lista de LWCs, **Agent Builder com uma conversa interpretando uma nota** e, do site, a tela de cadastro e o extrato de pontos.
+
+Quer que eu corrija a frase do e-mail e os acentos?
+
+## Usuario
+
+me ajude a gravar o vídeo, quais passos seguir e o que mostrar
+
+- `Read`: C:\Users\RafaelCunha\Downloads\ROTEIRO_DE_EXTENSAO_EAD_DGT1352.pdf
+- `PowerShell`: function Q($soql) { sf data query --target-org doacao-org --query $soql --json 2>$null | Out-File -Encoding utf8 "$env:TEMP\q.json"; (Get-Content "$env:TEMP\q.json" -Raw | ConvertFrom-Json).result.records } Write-Output ...
+- `Read`: C:\Users\RAFAEL~1\AppData\Local\Temp\claude\c--Dev-Trabalho-2\25a84e7d-1a8b-4717-9ac3-427de23265f8\tasks\b4z9z1irk.output
+**Claude:** O roteiro da disciplina não obriga vídeo: ele aparece só como uma das formas de evidência ("capturas de tela ou por vídeos"), sem duração nem formato. Então o vídeo entra como mais uma evidência, que precisa ser descrita e contextualizada no relatório como as outras. Montei o roteiro com os dados reais do org.
+
+## Antes de gravar
+
+**1. Corrija o que vai aparecer na tela.** O vídeo registraria dois problemas que já conhecemos:
+- A confirmação do resgate diz "Enviamos uma cópia para o seu e-mail", e o relatório documenta que esse e-mail não chega.
+- Faltam acentos em "Catalogo", "codigo" e "Oleo de Soja".
+
+Consigo corrigir os dois em poucos minutos. Também abra a tela de login uma vez: se ainda estiver em inglês, me avise antes de gravar.
+
+**2. Proteja a privacidade**, já que o vídeo vai ser anexado ao trabalho:
+- Use uma janela de navegador limpa, sem barra de favoritos, e feche Teams e Outlook para não aparecer notificação do trabalho.
+- Não abra o Explorador de Arquivos nem pastas do OneDrive. O caminho contém o nome da empresa.
+- No Salesforce, não entre em Setup → Company Information: o nome do org é o que vazava nos e-mails.
+
+**3. Faça um ensaio completo antes.** Serve principalmente para testar o bloqueio de nota duplicada, que é um ótimo momento para mostrar mas nunca foi testado pela tela.
+
+**4. Deixe prontas as abas:** site logado, Agent Builder no Preview, Object Manager, resultado dos testes Apex e o GitHub.
+
+## Roteiro (cerca de 7 minutos)
+
+**1. Abertura (30s):** seu nome, a disciplina e a proposta: um programa de fidelidade onde a nota fiscal vira pontos.
+> "Eu jogava a nota fora sem aproveitar nada. Quis ver se dava pra resolver isso com IA dentro da plataforma que eu já uso."
+
+**2. Site em uso (2min30):** a parte principal.
+1. Home logada, apontando o saldo no cabeçalho (**129 pontos**).
+2. Cole o texto da nota, valor `137,40`, chave **A**, e envie. O saldo sobe para cerca de 266.
+3. Envie de novo com a **mesma chave A**. Deve ser recusada. Esse é o controle contra fraude.
+4. Abra o catálogo e escolha o **Café 500g (35 pts)**. No checkout aparece o saldo antes e depois.
+5. Informe o CPF `111.444.777-35` e confirme. Aparece o QR code com o código de retirada.
+> Mencione que o CPF é validado pelo dígito verificador, e que a retirada é na loja porque é assim que os programas grandes funcionam (Pão de Açúcar Mais).
+
+**3. A IA (2min):** a cena mais importante para a disciplina.
+1. Abra o Agent Builder, **Mercado Pontos Assistente**, Preview.
+2. Cole o mesmo texto da nota e peça para ele interpretar.
+3. Mostre que ele extrai os itens, categoriza e sugere um produto.
+> Diga com honestidade: o agente entende a nota, mas não consegue gravar sozinho por causa de um bug real da plataforma (a ação aparece como zero ações no Trace). Por isso o registro passa pelo formulário. Não mostre isso como se funcionasse de ponta a ponta.
+
+**4. Bastidores (1min30):** mostre os 4 objetos no Object Manager, o resultado dos testes (**94/94, cobertura de 88%**) e o GitHub com os commits.
+
+**5. Dificuldades e aprendizado (1min):** os achados reais:
+- Prompt Builder que não ativava (bug conhecido do Salesforce).
+- O pivot para o Agentforce.
+- A leitura de imagem indisponível no org de desenvolvimento.
+- O e-mail que sai do Salesforce mas não é entregue.
+
+Termine com o desenvolvimento feito em par com uma IA (Claude Code), cujo histórico está anexado.
+> Essa parte mostra aprendizado de "IA para Devs" melhor do que qualquer demonstração.
+
+## Textos para colar
+
+**Nota fiscal:**
+```
+SUPERMERCADO BOA COMPRA LTDA
+CNPJ: 12.345.678/0001-90
+NFC-e Nº 004521 Serie 1
+
+ARROZ TIPO 1 5KG              1 UN   x  27,90   27,90
+FEIJAO CARIOCA 1KG             2 UN   x   8,50   17,00
+OLEO DE SOJA 900ML             1 UN   x   7,20    7,20
+LEITE INTEGRAL 1L              6 UN   x   5,10   30,60
+SABAO EM PO 1KG                1 UN   x  15,90   15,90
+PAPEL HIGIENICO 12 ROLOS       1 UN   x  22,00   22,00
+CAFE TORRADO E MOIDO 500G      1 UN   x  16,80   16,80
+
+VALOR TOTAL R$ 137,40
+FORMA PAGAMENTO: CARTAO DE DEBITO
+```
+
+**Chaves de acesso.** Cada uma só pontua uma vez, e nenhuma das notas atuais usa chave:
+- Ensaio: `35260912345678000190650010000452112345678902`
+- Gravação (chave A): `35260912345678000190650010000452112345678903`
+
+## Depois de gravar
+
+- **Não coloque o vídeo no repositório**, porque o GitHub recusa arquivos acima de 100 MB. Suba no YouTube como "não listado" ou no Google Drive e guarde o link.
+- **Aproveite as telas internas** para tirar os prints que ainda faltam: Object Manager, testes, LWCs e Agent Builder.
+- **Me passe o link**, que eu escrevo a entrada do vídeo na seção de Evidências com nome, data, contexto e o que ele demonstra, como o roteiro pede.
+
+Quer que eu corrija a frase do e-mail e os acentos agora, antes do ensaio?
+
+## Usuario
+
+<task-notification>
+<task-id>b4z9z1irk</task-id>
+<tool-use-id>toolu_0122nkmMRDNymfnMneYArmUN</tool-use-id>
+<output-file>C:\Users\RAFAEL~1\AppData\Local\Temp\claude\c--Dev-Trabalho-2\25a84e7d-1a8b-4717-9ac3-427de23265f8\tasks\b4z9z1irk.output</output-file>
+<status>completed</status>
+<summary>Background command "Levantar saldo, notas, produtos e resgates atuais" completed (exit code 0)</summary>
+</task-notification>
+
+**Claude:** Nada muda no roteiro: essa foi só a consulta ao org que ficou rodando em segundo plano, e os números que usei (129 pontos, 8 produtos, nenhuma nota com chave de acesso) já vinham dela.
+
+Continuo aguardando sua resposta: quer que eu corrija a frase do e-mail e os acentos antes do ensaio?
+
+## Usuario
+
+não precisa mexer no email, quero entregar o trabalho. Gravei o vídeo está na pasta downloads, trabalho2
+
+- `Bash`: ls -la /c/Users/RafaelCunha/Downloads/ | grep -i "trabalho" ; echo "=== conteudo ==="; ls -la "/c/Users/RafaelCunha/Downloads/trabalho2" 2>/dev/null || ls -la /c/Users/RafaelCunha/Downloads/*rabalho2* 2>/dev/null
+- `PowerShell`: $sh = New-Object -ComObject Shell.Application $pasta = $sh.Namespace("$env:USERPROFILE\Downloads") $item = $pasta.ParseName("trabalho2.mp4") foreach ($i in 0..320) { $n = $pasta.GetDetailsOf($null, $i); $v = $pasta.GetDe...
+- `PowerShell`: Add-Type -AssemblyName PresentationCore $p = New-Object System.Windows.Media.MediaPlayer $p.Open([Uri]"$env:USERPROFILE\Downloads\trabalho2.mp4") $t = 0; while (-not $p.NaturalDuration.HasTimeSpan -and $t -lt 50) { Start...
+- `Bash`: cd "/c/Dev/Trabalho 2" && echo "=== AJUSTAR restantes ===" && grep -n "AJUSTAR" docs/relatorio-extensao.md | cut -c1-120 && echo "=== evidencias ===" && ls docs/evidencias/ && echo "=== capturas novas desde ontem ===" &&...
+**Claude:** Não consigo assistir o vídeo daqui, mas dá para confirmar o que foi feito durante a gravação pelos registros que ela deixou no org. Vou olhar isso e o print novo de hoje:
+
+- `Read`: C:\Users\RafaelCunha\OneDrive - <EMPRESA>\Imagens\Capturas de tela\Sem título22.png
+- `PowerShell`: function Q($soql) { sf data query --target-org doacao-org --query $soql --json 2>$null | Out-File -Encoding utf8 "$env:TEMP\q.json"; (Get-Content "$env:TEMP\q.json" -Raw | ConvertFrom-Json).result.records } Write-Output ...
+- `Edit`: <PROJETO>\docs\relatorio-extensao.md
+- `Bash`: cd "/c/Dev/Trabalho 2" && git checkout -- force-app/main/default/lwc/jsconfig.json && powershell -ExecutionPolicy Bypass -File "scripts\gerar-historico-claude.ps1" && powershell -Command "\$c = Get-Content 'docs\historic...
