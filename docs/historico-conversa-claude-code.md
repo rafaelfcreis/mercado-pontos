@@ -3831,3 +3831,220 @@ eu já fiz login no git pessoal, confere pra mim. o nome é rafaelfcreis
 
 - `Bash`: cd "/c/Dev/Trabalho 2" && sed -i 's|^- \*\*Localização:\*\* \[cidade/estado\]|- **Localização:** Uberlândia/MG|' docs/relatorio-extensao.md && grep -n "Localização" docs/relatorio-extensao.md && echo "=== conta configura...
 - `Bash`: cd "/c/Dev/Trabalho 2" && git checkout -- force-app/main/default/lwc/jsconfig.json 2>/dev/null; powershell -ExecutionPolicy Bypass -File "scripts\gerar-historico-claude.ps1" && powershell -Command "\$c = Get-Content 'doc...
+**Claude:** Login confirmado — o push passou. Agora a `main`:
+
+- `Bash`: cd "/c/Dev/Trabalho 2" && git checkout main -q && git merge sf-dev --ff-only -q && GIT_TERMINAL_PROMPT=0 GCM_INTERACTIVE=never timeout 90 git push origin main 2>&1 | tail -2; git checkout sf-dev -q && echo "=== conferenc...
+- `Bash`: cd "/c/Users/RafaelCunha/.claude/projects/c--Dev-Trabalho-2/memory" && cat >> ia-para-devs-mercado-pontos.md << 'EOF'  **Atualização (2026-09-17, mais tarde):** cidade preenchida (Uberlândia/MG, informada pelo usuário) —...
+**Claude:** Tudo certo: o login da conta pessoal funcionou e o GitHub está em dia.
+
+- **Localização:** preenchida como Uberlândia/MG. Não há mais nenhuma lacuna no relatório.
+- **GitHub:** o push passou. `main` e `sf-dev` estão iguais no seu computador e no GitHub (`09979fe`), com todos os commits de hoje.
+- **Histórico da conversa:** regenerado até agora e conferido. Não aparece o nome da empresa.
+
+Para entregar, falta você:
+1. **Revisar o relatório.** Principalmente as partes em primeira pessoa da Parte III, já que você disse que ia ler.
+2. **Me dizer o formato de entrega:** colar cada seção na plataforma, ou enviar um documento Word/PDF. Eu preparo a versão final nesse formato.
+3. **Anexar o vídeo** `Downloads\trabalho2.mp4` (322 MB). Se a plataforma recusar pelo tamanho, suba no Drive ou no YouTube como "não listado" e mande o link.
+
+## Usuario
+
+qual o título do trabalho?
+
+**Claude:** No relatório, o título atual é:
+
+**Relato de Extensão — Mercado Pontos (IA para Devs)**
+
+Esse título funciona como cabeçalho do documento, mas não diz o que o trabalho faz. Se a plataforma pedir um título para a atividade, eu usaria um mais descritivo:
+
+**Mercado Pontos: programa de fidelidade de supermercado com IA generativa em Salesforce**
+
+Outras opções, conforme o que você quer destacar:
+- *Transformando notas fiscais em pontos: um programa de fidelidade com IA generativa* — foca no problema do consumidor.
+- *IA generativa na prática: desenvolvimento de um programa de fidelidade com Agentforce* — foca na disciplina.
+
+Se escolher um deles, eu atualizo o título do relatório também, para os dois ficarem iguais.
+
+## Usuario
+
+versão resumida
+
+**Claude:** Texto para colar (sem formatação, porque a caixa da plataforma é texto simples):
+
+---
+
+Esta atividade de extensão foi realizada de forma individual, sem uma comunidade externa ou instituição parceira. A parte envolvida é o próprio autor, em dois papéis: desenvolvedor da solução e consumidor que faz compras em supermercado com regularidade e vive na prática o problema tratado.
+
+Perfil do participante: 1 participante (o próprio autor), 32 anos, morador de Uberlândia/MG, com ensino superior incompleto (graduação a distância em andamento). Adulto economicamente ativo, empregado na área de tecnologia e atuando em desenvolvimento de sistemas, que concilia o trabalho com os estudos.
+
+---
+
+O roteiro também pede **gênero**, que eu não incluí porque você não me informou. Se quiser, acrescente na frase do perfil, por exemplo: "32 anos, [gênero], morador de Uberlândia/MG".
+
+Posso preparar as versões resumidas de todas as outras seções de uma vez, na ordem da plataforma, para você só copiar e colar.
+
+## Usuario
+
+resumido
+
+**Claude:** Texto para colar:
+
+---
+
+Como a atividade foi individual, o diagnóstico partiu da minha própria experiência como consumidor. Respondi às mesmas perguntas que faria a uma comunidade: o que faço com a nota fiscal depois da compra, se uso programas de fidelidade, se usaria uma ferramenta de pontos e o quanto conhecia de IA aplicada.
+
+As respostas mostraram a dor principal: a nota fiscal é jogada fora sem nenhum aproveitamento, nunca usei um programa de fidelidade de supermercado, mas usaria com frequência uma opção simples. Ou seja, a barreira não é falta de interesse, e sim a falta de uma solução fácil de usar.
+
+Dados de mercado reforçam o problema: segundo pesquisa da Associação Brasileira das Empresas do Mercado de Fidelização (Abemf), 88,3% dos brasileiros participam de algum programa de fidelidade, mas os supermercados aparecem só em 4º lugar na preferência, atrás de companhias aéreas, postos de combustível e bancos.
+
+Situação-problema: consumidores descartam notas fiscais sem nenhum benefício, e redes de supermercado menores não têm orçamento para programas de fidelidade caros, nem conhecimento de como a IA generativa poderia simplificar esse tipo de solução.
+
+---
+
+Quer que eu já mande o 1.3 também?
+
+## Usuario
+
+pode
+
+**Claude:** **1.3 — Demanda sociocomunitária e motivação acadêmica**
+
+---
+
+A falta de um jeito simples de transformar a nota fiscal em benefício afeta o bolso do consumidor, que deixa de aproveitar suas compras, e também a capacidade de redes de supermercado menores de competir com as grandes, que já têm programas de fidelidade próprios.
+
+Os conteúdos da disciplina de Inteligência Artificial para Devs mostram como a IA generativa consegue interpretar dados sem estrutura fixa, como o texto de uma nota fiscal, sem depender de leitores rígidos de layout. Isso motivou o desenvolvimento do Mercado Pontos: um programa de fidelidade construído em Salesforce, no qual o cliente envia o texto da nota, acumula pontos e os troca por produtos, com um assistente de IA generativa (Agentforce) que interpreta a nota e sugere produtos para resgate.
+
+Para mim, a atividade foi a chance de aplicar na prática o que a disciplina ensina, usando recursos de IA nativos da plataforma e sem custo de API externa, e de entender como a IA se encaixa num sistema real, incluindo suas limitações.
+
+---
+
+Quer o 1.4 (Objetivos) em seguida?
+
+## Usuario
+
+pode, resumido
+
+**Claude:** **1.4 — Objetivos**
+
+---
+
+Objetivo 1: Desenvolver e publicar, até 17/09/2026, um site funcional onde o cliente envia o texto da nota fiscal, acumula pontos automaticamente e os troca por produtos, com o apoio de um assistente de IA generativa que interpreta a nota.
+
+Objetivo 2: Ampliar meu conhecimento prático sobre o uso de IA generativa no desenvolvimento de software, medido pelas decisões de arquitetura de IA tomadas e documentadas ao longo do projeto, como a troca do Prompt Builder pelo Agentforce e o tratamento de limitações reais da plataforma.
+
+---
+
+Quer o 2.1 (Plano de trabalho com cronograma)?
+
+## Usuario
+
+sim, resumido
+
+**Claude:** **2.1 — Plano de trabalho com cronograma**
+
+---
+
+Objetivo: desenvolver e publicar o site Mercado Pontos até 17/09/2026. Todas as ações foram realizadas por mim, no ambiente Salesforce (Developer Edition), com apoio do assistente de IA Claude Code. As datas vêm dos registros (commits) do repositório do projeto.
+
+Ação 1 (06/09/2026): definir a arquitetura e o modelo de dados — levantamento dos recursos de IA disponíveis no Salesforce e criação dos objetos de nota fiscal, itens, catálogo e resgates.
+
+Ação 2 (06/09/2026): implementar as regras de negócio em Apex (cálculo de pontos e resgate), com testes automatizados, e as telas do sistema em LWC.
+
+Ação 3 (12 e 13/09/2026): integrar a IA generativa — tentativa com o Einstein Prompt Builder e, após um bug da plataforma, mudança para um agente do Agentforce que interpreta a nota.
+
+Ação 4 (14/09/2026): publicar o site na Experience Cloud, com cadastro próprio de clientes.
+
+Ação 5 (14 a 16/09/2026): testar o site em uso real e corrigir os problemas encontrados, adicionando catálogo com imagens, cabeçalho com saldo e resgate com retirada na loja por QR code.
+
+Ação 6 (16/09/2026): fazer o autodiagnóstico, respondendo às perguntas sobre hábitos de compra, fidelidade e IA.
+
+Ação 7 (16/09/2026): verificação final — rodar todos os testes (94 testes, 100% de aprovação) e revisar os e-mails enviados pelo site.
+
+Ação 8 (17/09/2026): gravar o vídeo do sistema em uso, reunir as evidências e finalizar o relato.
+
+---
+
+Reordenei as ações pela data em que aconteceram. No relatório completo, o autodiagnóstico aparece como Ação 3, mesmo tendo sido feito no dia 16.
+
+Quer o 2.2 (Envolvimento do público participante)?
+
+## Usuario
+
+pode, resumido
+
+**Claude:** **2.2 — Envolvimento do público participante**
+
+---
+
+Como a atividade foi individual, o público participante fui eu mesmo, em dois papéis. No planejamento, forneci o diagnóstico respondendo às perguntas sobre hábitos de compra, fidelidade e IA. No desenvolvimento e na avaliação, usei o site publicado como um cliente de verdade: me cadastrei, enviei notas fiscais, acumulei pontos e resgatei produtos com o QR code.
+
+Esse uso real revelou problemas que os testes automatizados não tinham mostrado, como o valor da compra lido no formato americano, imagens do catálogo que não carregavam e a tela de login em inglês. Todos foram corrigidos.
+
+Os registros desse uso estão nas evidências: prints do site em uso (login, envio de nota, catálogo e confirmação do resgate com QR code) e um vídeo mostrando o fluxo completo.
+
+---
+
+Quer o 2.3 (Avaliação dos resultados alcançados)?
+
+## Usuario
+
+sim, resumido
+
+**Claude:** **2.3 — Avaliação dos resultados alcançados**
+
+---
+
+Objetivo 1 (site funcional publicado): avaliado de forma objetiva. O site está publicado e no ar, foi testado por mim do início ao fim (cadastro, envio de nota, crédito de pontos e resgate com QR code) e passa em todos os 94 testes automatizados, com 88% de cobertura de código. O código está disponível publicamente em https://github.com/rafaelfcreis/mercado-pontos.
+
+Objetivo 2 (conhecimento prático de IA generativa): avaliado pelas decisões de arquitetura tomadas e documentadas ao longo do projeto. Entre elas: a escolha inicial do Prompt Builder, a identificação de um bug real nele, a mudança para o Agentforce, a descoberta de um segundo bug no Agentforce e a decisão final de usar a IA para interpretar a nota enquanto o registro dos pontos segue um caminho que não depende dela.
+
+Resultado esperado e alcançado: um sistema real funcionando e um aprendizado prático de que usar IA em um sistema real vai além de "chamar uma API" — exige lidar com as limitações da plataforma e tomar decisões quando o plano original não funciona.
+
+---
+
+Quer o 3.1 (Relato da experiência individual)? Ele tem três partes — Contextualização, Metodologia e Resultados e Discussão —, então me diga se a plataforma tem um campo só ou um para cada.
+
+## Usuario
+
+essa parte primeiro, resumido
+
+**Claude:** **3.1 — Evidências das atividades realizadas**
+
+---
+
+As evidências abaixo comprovam o sistema funcionando e o processo de desenvolvimento, que foi feito em parceria com uma IA — algo especialmente relevante para esta disciplina.
+
+01-site-tela-de-login.png (16/09/2026): tela de login do site publicado, com o cadastro próprio de clientes. Mostra que o site está no ar e acessível ao público.
+
+02-home-enviar-nota-fiscal-com-saldo.png (16/09/2026): página inicial logada, com o formulário de envio da nota fiscal e o saldo de pontos no cabeçalho. Mostra a funcionalidade principal do sistema.
+
+03-catalogo-de-resgate-com-imagens.png (16/09/2026): catálogo de produtos com o custo em pontos e o saldo disponível. Mostra a etapa de troca dos pontos.
+
+04-confirmacao-de-resgate-com-qr-code.png (17/09/2026): confirmação de um resgate real feito por mim, com o QR code e o código de retirada, e o saldo já debitado (de 149 para 129 pontos). Comprova o fluxo completo funcionando em uso real.
+
+trabalho2.mp4 (17/09/2026): vídeo mostrando o sistema em uso — envio de uma nota de R$ 137,40, que gerou 137 pontos, e resgate de um produto com QR code. Os registros gravados no Salesforce durante a gravação confirmam que é o sistema real.
+
+historico-conversa-claude-code.md: histórico completo das conversas com o assistente de IA (Claude Code) durante o desenvolvimento. Mostra as decisões de arquitetura, a investigação dos erros e as mudanças de plano.
+
+Site publicado: https://orgfarm-375b864f55-dev-ed.develop.my.site.com/mercadopontos
+
+Código-fonte (repositório público): https://github.com/rafaelfcreis/mercado-pontos — contém o código, o histórico de desenvolvimento em mais de 40 registros (commits) entre 06/09 e 17/09/2026, e o resultado dos 94 testes automatizados.
+
+---
+
+**Arquivos para anexar na plataforma:**
+- os 4 prints, em `<PROJETO>\docs\evidencias\`
+- o histórico, em `<PROJETO>\docs\historico-conversa-claude-code.md`
+- o vídeo, em `Downloads\trabalho2.mp4` — se ficar grande demais para o upload, coloque o link do Drive/YouTube no lugar do nome do arquivo.
+
+Quando quiser, sigo para o Relato da experiência individual.
+
+## Usuario
+
+eu só posso subir 5 arquivos.
+o vídeo coloque o link: https://drive.google.com/file/d/10h48TLGHwYjhBSTfGlDnCNIs91_OCWWE/view?usp=sharing
+
+- `WebFetch`
+- `Bash`: cd "/c/Dev/Trabalho 2" && grep -n "arquivo \`trabalho2.mp4\`" docs/relatorio-extensao.md
+- `Edit`: <PROJETO>\docs\relatorio-extensao.md
+- `Bash`: cd "/c/Dev/Trabalho 2" && git checkout -- force-app/main/default/lwc/jsconfig.json 2>/dev/null; powershell -ExecutionPolicy Bypass -File "scripts\gerar-historico-claude.ps1" && powershell -Command "\$c = Get-Content 'doc...

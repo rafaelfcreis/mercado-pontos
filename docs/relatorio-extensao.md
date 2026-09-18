@@ -526,7 +526,10 @@ sistema publicado em uso real pelo autor. Já capturados:
   fluxo completo — envio da nota, acúmulo de pontos e troca — funciona ponta
   a ponta em uso real, e não apenas nos testes automatizados.
 
-**6. Vídeo de demonstração do sistema** — arquivo `trabalho2.mp4`, gravado
+**6. Vídeo de demonstração do sistema** —
+https://drive.google.com/file/d/10h48TLGHwYjhBSTfGlDnCNIs91_OCWWE/view?usp=sharing
+(arquivo `trabalho2.mp4`, disponível no Google Drive por ter tamanho acima
+do limite de upload), gravado
 pelo autor em 17/09/2026, com o site publicado em uso real. O vídeo percorre
 o fluxo completo do cliente: com a conta já logada, o autor envia o texto de
 uma nota fiscal (valor de R$ 137,40, que gerou 137 pontos creditados no
