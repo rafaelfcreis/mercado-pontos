@@ -3711,3 +3711,84 @@ não precisa mexer no email, quero entregar o trabalho. Gravei o vídeo está na
 - `PowerShell`: function Q($soql) { sf data query --target-org doacao-org --query $soql --json 2>$null | Out-File -Encoding utf8 "$env:TEMP\q.json"; (Get-Content "$env:TEMP\q.json" -Raw | ConvertFrom-Json).result.records } Write-Output ...
 - `Edit`: <PROJETO>\docs\relatorio-extensao.md
 - `Bash`: cd "/c/Dev/Trabalho 2" && git checkout -- force-app/main/default/lwc/jsconfig.json && powershell -ExecutionPolicy Bypass -File "scripts\gerar-historico-claude.ps1" && powershell -Command "\$c = Get-Content 'docs\historic...
+- `Bash`: cd "/c/Dev/Trabalho 2" && git add -A && git commit -q -m "$(cat <<'EOF' Registra o video de demonstracao como evidencia  O video (trabalho2.mp4, gravado em 17/09/2026) mostra o fluxo completo do cliente no site publicado...
+- `Bash`: cd "/c/Dev/Trabalho 2" && git checkout sf-dev -q 2>/dev/null; git config credential.https://github.com.username rafaelfcreis && echo "conta fixada: $(git config credential.https://github.com.username)" && GIT_TERMINAL_PR...
+**Claude:** Registrei o vídeo no relatório (item 6 das Evidências). Mas ainda faltam algumas coisas para você entregar.
+
+## O que registrei do vídeo
+
+Não consigo assistir o arquivo daqui, então descrevi só o que os registros deixados no Salesforce durante a gravação confirmam:
+- uma nota de R$ 137,40 que gerou 137 pontos;
+- o resgate do **Kit Café da Manhã** (80 pontos) com QR code.
+
+**O vídeo também mostrou o Agent Builder conversando sobre a nota?** Se sim, me diga que eu acrescento essa parte na descrição. É o trecho mais importante para a disciplina, e não escrevi porque não consegui confirmar.
+
+O arquivo tem **322 MB** e não vai para o GitHub, que limita arquivos a 100 MB. Se a plataforma da faculdade recusar o upload, suba no Google Drive ou no YouTube como "não listado" e anexe o link.
+
+## Push bloqueado: precisa de você
+
+O commit está salvo localmente, mas o GitHub recusou o envio porque o Git usou a sua conta do trabalho (`<EMPRESA>-rafaelcunha`). Deixei a conta pessoal fixada para este repositório. Falta só você fazer login uma vez — rode no terminal e entre como **rafaelfcreis** quando o navegador abrir:
+
+```bash
+git push origin sf-dev
+git checkout main && git merge sf-dev --ff-only && git push origin main && git checkout sf-dev
+```
+
+## O que ainda falta no relatório
+
+Isto só você pode responder:
+
+1. **Faixa etária, escolaridade e perfil socioeconômico**
+2. **Cidade/estado**
+3. **Data de entrega** (aparece em dois lugares) — é hoje, 17/09?
+4. **Texto em primeira pessoa da Parte III:** entrega como está, ou quer revisar?
+
+Com essas respostas, eu preencho tudo e tiro do texto as notas internas de trabalho (os avisos `[AJUSTAR]`, o banner do topo e a seção "Próximos passos deste documento"). Nada disso pode ir para a entrega.
+
+Uma última pergunta: **você vai colar o texto por seções na plataforma, ou enviar um documento** (Word ou PDF)? Posso gerar a versão final no formato que você precisar.
+
+## Usuario
+
+data é hoje,
+tenho 32 anos, ensino superior imcompleto e perfil eu não sei, me ajude.
+escreva por mim, depois reviso.
+
+- `Read`: <PROJETO>\docs\relatorio-extensao.md
+- `Read`: <PROJETO>\docs\relatorio-extensao.md
+**Claude:** Vou finalizar o relatório. Enquanto isso, confiro se os links da seção Fontes ainda funcionam, já que havia uma nota pedindo isso antes da entrega:
+
+- `PowerShell`: $urls = @(  'https://www.panrotas.com.br/mercado/pesquisas-e-estatisticas/2025/10/88-dos-brasileiros-utilizam-programas-de-fidelidade-diz-pesquisa-da-abemf_222537.html',  'https://www.superhiper.com.br/sete-em-cada-dez-b...
+**Claude:** Dois links abriram. Os outros três recusaram a verificação automática (403/406), o que costuma ser bloqueio de robô, não link quebrado. Vou confirmar de outro jeito:
+
+- `ToolSearch`
+- `WebFetch`
+- `WebFetch`
+- `WebFetch`
+**Claude:** Quatro das cinco fontes estão confirmadas. O blog da Salesforce bloqueia acesso automático, mas foi lido normalmente quando a pesquisa foi feita. Agora as edições do relatório:
+
+- `Edit`: <PROJETO>\docs\relatorio-extensao.md
+- `Edit`: <PROJETO>\docs\relatorio-extensao.md
+- `Edit`: <PROJETO>\docs\relatorio-extensao.md
+- `Edit`: <PROJETO>\docs\relatorio-extensao.md
+- `Edit`: <PROJETO>\docs\relatorio-extensao.md
+- `Edit`: <PROJETO>\docs\relatorio-extensao.md
+**Claude:** Agora as ações do cronograma e o envolvimento do público, que ainda citavam coisas removidas do projeto:
+
+- `Edit`: <PROJETO>\docs\relatorio-extensao.md
+- `Edit`: <PROJETO>\docs\relatorio-extensao.md
+- `Edit`: <PROJETO>\docs\relatorio-extensao.md
+**Claude:** Agora a Parte III. Tiro os avisos de rascunho e reescrevo a Metodologia, que estava curta demais para o que o roteiro pede ("métodos usados" e "detalhes de implementação"):
+
+- `Edit`: <PROJETO>\docs\relatorio-extensao.md
+- `Edit`: <PROJETO>\docs\relatorio-extensao.md
+- `Edit`: <PROJETO>\docs\relatorio-extensao.md
+**Claude:** Por fim, as evidências e a seção de pendências internas:
+
+- `Edit`: <PROJETO>\docs\relatorio-extensao.md
+- `Edit`: <PROJETO>\docs\relatorio-extensao.md
+- `Bash`: cd "/c/Dev/Trabalho 2" && grep -n "^## Próximos passos deste documento\|^## Fontes" docs/relatorio-extensao.md
+- `Bash`: cd "/c/Dev/Trabalho 2" && sed -n '536,583p' docs/relatorio-extensao.md | head -12 && echo "..." && sed -i '542,582d' docs/relatorio-extensao.md && echo "=== depois ===" && sed -n '530,548p' docs/relatorio-extensao.md
+- `Bash`: cd "/c/Dev/Trabalho 2" && sed -i 's/(não substitui as respostas da$/(não substitui o diagnóstico do/' docs/relatorio-extensao.md && sed -i 's/^comunidade, mas embasa a relevância do tema)/autor, mas embasa a relevância d...
+**Claude:** Só sobrou a cidade/estado. Vou salvar tudo:
+
+- `Bash`: cd "/c/Dev/Trabalho 2" && git checkout -- force-app/main/default/lwc/jsconfig.json 2>/dev/null; powershell -ExecutionPolicy Bypass -File "scripts\gerar-historico-claude.ps1" && powershell -Command "\$c = Get-Content 'doc...

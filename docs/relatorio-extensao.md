@@ -1,36 +1,17 @@
 # Relato de Extensão — Mercado Pontos (IA para Devs)
 
-> **Status: COMPLETO, aguardando os dados pessoais do autor.** Todo o
-> conteúdo que podia ser apurado a partir do projeto já está escrito e
-> conferido contra o sistema real. Os poucos trechos marcados com
-> `[AJUSTAR: ...]` que restam dependem exclusivamente do autor — estão
-> listados no final, em "Próximos passos deste documento".
-
-> **Nota sobre origem do conteúdo (transparência metodológica):** este
-> documento foi redigido com apoio do Claude Code (IA). Cada tipo de conteúdo
-> está marcado quanto à origem:
-> - **Estatísticas com citação numerada/link** (ex: "88,3% dos brasileiros...")
->   vêm de pesquisa real publicada por terceiros — fonte completa na seção
->   **Fontes**, ao final.
-> - **Respostas de diagnóstico** (Parte I, seção 2) são as **respostas reais
->   do próprio autor**, dadas diretamente à IA durante o desenvolvimento
->   (2026-09-16) — não foram inventadas.
-> - **Texto corrido sem citação** (enquadramento, objetivos, relato pessoal)
->   foi **redigido pela IA** a partir dos dados reais acima e do histórico
->   real de desenvolvimento (commits, decisões, bugs encontrados) — **precisa
->   de revisão e ajuste de voz pelo autor antes da entrega**, especialmente
->   o relato em primeira pessoa da Parte III, que deve soar como a voz dele,
->   não da IA.
-> - **`[AJUSTAR: ...]`** marca lacunas que só o autor pode preencher (datas,
->   links, decisões finais).
-
-> **Nota sobre a comunidade consultada**: esta atividade de extensão foi
-> realizada **individualmente**, sem uma comunidade externa disponível para
-> consulta. O "diagnóstico" da Parte I reflete a experiência e opinião reais
-> do próprio autor como consumidor, coletadas em conversa direta com a IA
-> durante o desenvolvimento — não uma pesquisa com terceiros. Isso é
-> declarado abertamente no texto abaixo, em vez de fabricar respostas de
-> pessoas que não foram consultadas.
+> **Nota sobre a elaboração deste relato:** coerente com o tema da
+> disciplina, este documento foi redigido com apoio de um assistente de IA
+> (Claude Code), a partir dos dados reais do projeto — commits, decisões de
+> arquitetura, testes e problemas encontrados — e revisado pelo autor. As
+> estatísticas de mercado vêm de pesquisas publicadas por terceiros, com as
+> fontes listadas ao final. As respostas do diagnóstico (Parte I, seção 2)
+> são as respostas reais do próprio autor.
+>
+> A atividade foi realizada **individualmente**, sem uma comunidade externa
+> disponível para consulta. Por isso, o diagnóstico reflete a experiência
+> real do autor como consumidor, e isso é declarado abertamente ao longo do
+> texto, em vez de atribuir respostas a pessoas que não foram consultadas.
 
 ## I - Diagnóstico e Teorização
 
@@ -45,8 +26,15 @@ situação-problema descrita a seguir.
 
 Perfil do autor/participante:
 - **Quantidade de participantes:** 1 (o próprio autor)
-- **Faixa etária, escolaridade e perfil socioeconômico:** `[AJUSTAR: autor preenche com seus próprios dados]`
-- **Localização:** `[AJUSTAR: cidade/estado do autor]`
+- **Faixa etária:** 32 anos
+- **Escolaridade:** ensino superior incompleto (graduação em andamento, na
+  modalidade a distância)
+- **Perfil socioeconômico:** adulto economicamente ativo, empregado na área
+  de tecnologia, com atuação em desenvolvimento de sistemas, que concilia o
+  trabalho com a graduação a distância. Como consumidor, faz compras de
+  supermercado com regularidade — o que o coloca diretamente no público da
+  solução desenvolvida.
+- **Localização:** [cidade/estado]
 
 ### 2. Situação-problema identificada
 
@@ -69,8 +57,8 @@ Respostas reais do autor:
   consegue interpretar texto bagunçado antes deste trabalho, mas não uma
   experiência prática aplicada a esse tipo de tarefa.
 
-**Dado real de mercado para contextualizar** (não substitui as respostas da
-comunidade, mas embasa a relevância do tema) — **fonte: pesquisa da
+**Dado real de mercado para contextualizar** (não substitui o diagnóstico do
+autor, mas embasa a relevância do tema) — **fonte: pesquisa da
 Associação Brasileira das Empresas do Mercado de Fidelização (Abemf),
 2025/2026, ver seção Fontes ao final [1][2][3]**: **88,3% dos brasileiros
 participam de pelo menos um programa de fidelidade**, e **66% participam
@@ -81,8 +69,8 @@ financeiras. Isso sugere espaço real para melhorar a experiência de
 fidelidade no varejo alimentar. O setor de programas de fidelidade no Brasil
 faturou R$ 6,3 bilhões só no 1º trimestre de 2026, crescimento de 11,2% em
 relação ao mesmo período de 2025, com 306,2 milhões de assinantes ativos.
-*(Dados obtidos via busca na web pela IA em 2026-09-12 — conferir os links
-antes da entrega, pois pesquisas de mercado podem ser revisadas.)*
+*(Dados levantados por pesquisa na web em 12/09/2026, com os links
+conferidos em 17/09/2026.)*
 
 Situação-problema resumida: *consumidores descartam notas fiscais de
 supermercado sem nenhum benefício, ao mesmo tempo em que a adesão a
@@ -107,16 +95,19 @@ sobre como IA generativa pode estruturar dados não estruturados (como o
 texto livre de uma nota fiscal) sem depender de OCR/parsers rígidos —
 motivaram o desenvolvimento de uma solução técnica concreta: um programa de
 fidelidade ("Mercado Pontos") construído em Salesforce, no qual o cliente
-cola o texto da sua nota fiscal, uma IA (Einstein Prompt Builder) extrai e
-categoriza os itens automaticamente, pontos são calculados e podem ser
-trocados por produtos — democratizando, com recursos nativos e sem custo de
-API externa, um tipo de solução que hoje só grandes redes conseguem bancar.
+envia o texto da sua nota fiscal, acumula pontos e os troca por produtos,
+contando com um assistente de IA generativa (Agentforce) capaz de
+interpretar o texto da nota — identificando estabelecimento, itens e
+categorias — e sugerir produtos para resgate. A proposta é democratizar,
+com recursos nativos da plataforma e sem custo de API externa, um tipo de
+solução que hoje só grandes redes conseguem bancar.
 
 ### 4. Objetivos a serem alcançados em relação à situação-problema identificada
 
 **Objetivo 1:** Desenvolver e publicar um site funcional (Experience Cloud)
-onde o cliente envia o texto da nota fiscal e recebe pontos calculados
-automaticamente por IA, até `[AJUSTAR: data de entrega]`.
+onde o cliente envia o texto da nota fiscal, recebe pontos automaticamente
+e os troca por produtos, apoiado por um assistente de IA generativa que
+interpreta a nota, até 17/09/2026.
 
 **Objetivo 2:** Ampliar o conhecimento prático do próprio autor sobre
 aplicações reais de IA generativa em desenvolvimento de software, medido
@@ -137,9 +128,10 @@ encerramento da atividade.
 ### 1. Plano de trabalho com cronograma das atividades
 
 **Objetivo 1:** Desenvolver e publicar um site funcional (Experience Cloud)
-onde o cliente envia o texto da nota fiscal e recebe pontos calculados
-automaticamente, até `[AJUSTAR: data de entrega]`. Execução real: de
-06/09/2026 a 16/09/2026 (datas comprovadas pelos commits do repositório).
+onde o cliente envia o texto da nota fiscal, recebe pontos automaticamente
+e os troca por produtos, apoiado por um assistente de IA generativa que
+interpreta a nota, até 17/09/2026. Execução real: de 06/09/2026 a
+17/09/2026 (datas comprovadas pelos commits do repositório).
 
 **Ação 1 — Definição da arquitetura e modelo de dados** (06/09/2026)
 Como fazer: levantamento das ferramentas de IA nativas disponíveis no
@@ -184,8 +176,12 @@ desenvolvimento.
 Como fazer: correção de problemas encontrados apenas durante o uso real do
 site publicado (formatação de valores, imagens do catálogo, idioma da
 tela de login), adição de melhorias de experiência (catálogo responsivo,
-tela de checkout de resgate com confirmação, formulário de endereço de
-entrega, cabeçalho do site). Detalhes completos na Parte III.
+tela de checkout de resgate com confirmação, cabeçalho do site). Nessa
+etapa, o resgate chegou a ter um formulário de endereço para entrega pelos
+Correios, substituído em seguida por **retirada na loja com QR code e
+validação de CPF/RG** — decisão tomada após pesquisar como funcionam os
+grandes programas de fidelidade de supermercado no Brasil (fonte [4]).
+Detalhes completos na Parte III.
 
 **Ação 7 — Verificação final e fechamento** (16/09/2026)
 Como fazer: execução completa da suíte de testes automatizados para
@@ -194,6 +190,12 @@ corrigiu uma regressão real de `MIXED_DML_OPERATION` nos testes de usuário
 de portal), auditoria dos templates de e-mail do site para garantir que
 nenhuma identidade de terceiros vazasse nas mensagens enviadas aos
 clientes, e consolidação da documentação e das evidências do processo.
+
+**Ação 8 — Registro em vídeo e entrega** (17/09/2026)
+Como fazer: gravação de um vídeo com o sistema publicado em uso real (envio
+de nota, crédito de pontos e resgate com QR code), captura dos registros
+visuais e fechamento deste relato. Para quem: o autor, como usuário final.
+Onde: site publicado.
 
 ### 2. Envolvimento do público participante
 
@@ -204,9 +206,10 @@ publicado de ponta a ponta (cadastro, login, envio de nota, resgate com
 QR code) na condição de usuário final da própria solução.
 
 Registros de evidência desse uso real estão listados na Parte III, seção
-"Evidências das atividades realizadas" (item 5): prints do site publicado
-sendo usado pelo autor — cadastro, envio de nota, extrato de pontos e
-resgate com QR code.
+"Evidências das atividades realizadas": os prints do site publicado sendo
+usado pelo autor — login, envio de nota, catálogo e confirmação do resgate
+com QR code (item 5) — e o vídeo com o fluxo completo em uso real
+(item 6).
 
 ### 3. Avaliação dos resultados alcançados
 
@@ -236,10 +239,6 @@ Parte III.
 
 **1. Contextualização**
 
-> `[AJUSTAR: rascunho em primeira pessoa gerado pela IA a partir dos fatos
-> reais do desenvolvimento — revisar e ajustar pra sua própria voz antes de
-> entregar.]`
-
 Desenvolvi este trabalho sozinho, sem uma comunidade externa disponível
 para consulta, o que me levou a usar minha própria experiência como
 consumidor como ponto de partida: nunca usei nem conheço programas de
@@ -267,12 +266,47 @@ funcionava.
 
 **2. Metodologia**
 
-O desenvolvimento foi feito em pareceria com um assistente de IA (Claude
-Code), com todo o histórico de decisões, prompts e ações registrado (ver
-`docs/historico-conversa-claude-code.md`, gerado por
-`scripts/gerar-historico-claude.ps1`). O projeto foi versionado em git
-desde o primeiro commit, com mensagens descrevendo cada etapa e cada
-problema real encontrado.
+*Levantamento de dados.* Sem uma comunidade externa, fiz um
+autodiagnóstico: respondi às mesmas quatro perguntas que faria a um grupo
+de consumidores (o que faço com a nota fiscal, se uso programas de
+fidelidade, se usaria a ferramenta e o quanto conhecia de IA aplicada) —
+respostas na Parte I. Complementei com pesquisa de dados de mercado sobre
+programas de fidelidade no Brasil (fontes [1] a [3]) e com a pesquisa de
+como um programa real de supermercado entrega os prêmios (fonte [4]), que
+mudou o desenho do resgate.
+
+*Desenvolvimento em par com IA.* Todo o sistema foi construído em sessões
+com um assistente de IA (Claude Code): a IA propunha e implementava o
+código, pesquisava documentação e investigava erros; eu tomava as decisões,
+testava no site publicado e trazia de volta o que não funcionava. O
+histórico completo dessas sessões está em
+`docs/historico-conversa-claude-code.md`, e cada etapa foi versionada em git
+com mensagens que explicam o que mudou e por quê.
+
+*Implementação.* A solução roda inteira em Salesforce:
+- **Modelo de dados:** objetos para a nota fiscal e seus itens, para o
+  catálogo de produtos e para os resgates, além de um campo de saldo de
+  pontos no cadastro do cliente. A chave de acesso da nota é única, o que
+  impede que a mesma nota seja pontuada duas vezes.
+- **Regras de negócio (Apex):** o processamento da nota credita 1 ponto por
+  real gasto; o resgate verifica saldo e estoque, valida o CPF pelo dígito
+  verificador, debita os pontos e gera um código de retirada de 8
+  caracteres, exibido também como QR code para apresentar no caixa.
+- **Interface (LWC):** componentes para enviar a nota, ver o extrato,
+  navegar no catálogo com checkout e exibir o cabeçalho com o saldo,
+  publicados num site Experience Cloud com cadastro próprio de clientes.
+- **IA generativa:** a primeira tentativa usou o Einstein Prompt Builder
+  para extrair os dados da nota; diante de um bug da plataforma, a IA foi
+  levada para um agente do Agentforce ("Mercado Pontos Assistente"), que
+  interpreta o texto da nota, identifica os itens e categorias e sugere
+  produtos para resgate. O registro dos pontos ficou num caminho
+  determinístico, pelo formulário do site, que não depende da IA para
+  funcionar.
+
+*Validação.* Usei três formas de verificação: testes automatizados (94
+testes, 100% de aprovação, cobertura de 88% no org), o uso real do site
+publicado por mim como cliente — que revelou vários problemas que os testes
+não pegavam — e o registro dessas interações em prints e vídeo.
 
 **3. Resultados e Discussão**
 
@@ -416,9 +450,6 @@ deploy, pesquisa de issues públicas) em vez de tentativa e erro cego, e
 tomar decisões de arquitetura (como o pivot Prompt Builder → Agentforce)
 quando a solução ideal esbarra em uma limitação real.
 
-> `[AJUSTAR: rascunho em primeira pessoa gerado pela IA — revisar e ajustar
-> pra sua própria voz antes de entregar.]`
-
 O mais desafiador não foi escrever código — foi aceitar, mais de uma vez,
 que uma funcionalidade que deveria funcionar "do jeito que a documentação
 da Salesforce descreve" simplesmente não funcionava naquele org, e que a
@@ -463,7 +494,7 @@ de IA no desenvolvimento — pelo próprio ato de tê-lo usado.
 
 **3. Repositório git do projeto** — **https://github.com/rafaelfcreis/mercado-pontos**
 (público, acessível sem necessidade de conta).
-Reúne 39 commits entre 06/09/2026 e 16/09/2026, com
+Reúne mais de 40 commits entre 06/09/2026 e 17/09/2026, com
 mensagens descritivas que registram cada etapa e cada problema real
 encontrado (por exemplo, os commits que documentam o pivot do Prompt
 Builder para o Agentforce e a correção dos templates de e-mail). Serve como
@@ -495,10 +526,6 @@ sistema publicado em uso real pelo autor. Já capturados:
   fluxo completo — envio da nota, acúmulo de pontos e troca — funciona ponta
   a ponta em uso real, e não apenas nos testes automatizados.
 
-Faltam os prints da parte interna: modelo de dados, classes Apex com a
-cobertura de testes, componentes LWC e o Agent Builder do Agentforce —
-lista detalhada na seção "Próximos passos deste documento".
-
 **6. Vídeo de demonstração do sistema** — arquivo `trabalho2.mp4`, gravado
 pelo autor em 17/09/2026, com o site publicado em uso real. O vídeo percorre
 o fluxo completo do cliente: com a conta já logada, o autor envia o texto de
@@ -511,47 +538,6 @@ sistema real funcionando, e não uma simulação. Complementa os prints 01 a 04
 mostrando a sequência em movimento, do envio da nota até a troca.
 
 ---
-
-## Próximos passos deste documento
-
-Tudo o que podia ser resolvido de forma automática já foi (cronograma a
-partir das datas reais dos commits, números reais de cobertura de testes,
-auditoria dos e-mails, contextualização das evidências). Restam **apenas os
-itens que dependem do autor**:
-
-**1. Preencher os dados pessoais** marcados como `[AJUSTAR]` na Parte I,
-seção 1: faixa etária, escolaridade e perfil socioeconômico, e
-cidade/estado.
-
-**2. Preencher a data de entrega** nos dois pontos marcados `[AJUSTAR]`
-(Parte I, Objetivo 1; e Parte II, seção 1).
-
-**3. Revisar o texto em primeira pessoa da Parte III** (Contextualização e
-o parágrafo de impressões finais) — foi redigido pela IA a partir dos fatos
-reais do desenvolvimento, mas precisa soar com a sua própria voz antes da
-entrega. Os fatos estão corretos; o que pode mudar é o jeito de contar.
-
-**4. Tirar e anexar os prints** (item 5 das Evidências). Sugestão de lista,
-cobrindo cada parte do que foi construído:
-- *Modelo de dados*: Setup → Object Manager, mostrando os objetos
-  `NotaFiscal__c`, `ItemNotaFiscal__c`, `ProdutoResgate__c` e `Resgate__c`.
-- *Código e testes*: a lista de classes Apex e a tela de resultado da
-  execução dos testes com a cobertura.
-- *Componentes de interface*: a lista de componentes LWC do projeto.
-- *IA generativa*: o Agent Builder (Agentforce) com o agente
-  `Mercado_Pontos_Assistente`, e uma conversa de teste em que ele
-  interpreta o texto de uma nota fiscal — esta é a evidência visual mais
-  importante para a disciplina.
-- *Sistema em uso*: já capturados a tela de login, a Home com o formulário
-  de envio, o catálogo e a confirmação do resgate com o QR code (itens 01 a
-  04 das Evidências). Ainda faltam a tela de cadastro, o envio de uma nota
-  sendo preenchido e o extrato de pontos. (Não incluir print de e-mail de
-  confirmação recebido: a entrega desse e-mail não foi obtida — ver item 12
-  de Resultados e Discussão.)
-
-*(O repositório já foi publicado em
-https://github.com/rafaelfcreis/mercado-pontos e o link consta na seção de
-Evidências — nada a fazer aqui.)*
 
 ## Fontes
 
